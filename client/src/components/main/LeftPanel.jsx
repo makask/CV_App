@@ -8,6 +8,7 @@ function LeftPanel(){
             <h1>Profile</h1>
             <h1>CVs</h1>
             <h1>Assignments</h1>
+            <h1>Job advertisements</h1>
         </div>
     );
 }

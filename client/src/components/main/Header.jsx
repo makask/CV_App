@@ -1,5 +1,6 @@
 import React from "react";
 import { useCookies } from "react-cookie";
+import profilePic from "../../images/Profile.PNG";
 
 function Header(){
 
@@ -12,8 +13,16 @@ function Header(){
 
     return (
         <div className="header-container">
-            <h1>Header</h1>
-            <button onClick={()=>logOut()}>Log out</button>
+            <div className="header-profile">
+                <img src={profilePic} />
+                <div className="header-greeting">
+                    <p>Hello there,</p>
+                    <h2>John Smith (@ John.Smith@gmail.com ) </h2>
+                </div>
+            </div>
+            <div>
+                <button onClick={()=>logOut()}>Log out</button>
+            </div>
         </div>
     );
 }
