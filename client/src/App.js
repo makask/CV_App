@@ -1,7 +1,7 @@
 import React from "react";
 import Auth from "./components/Auth";
 import { useCookies } from "react-cookie";
-import Main from "./components/Main";
+import Main from "./components/main/Main";
 
 function App() {
 

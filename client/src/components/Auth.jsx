@@ -43,16 +43,16 @@ function Auth(){
     return(
         <div className="auth-container">
             <div className="auth-description">
-                    <h1>CV-App</h1>
+                    <h1>CV-Builder</h1>
                     <p>Create your cv fast and easy.</p>  
             </div>
             <div className="auth-form-container">
                 <form>
                     <h2>{isLogin ? 'Log in!' : 'Register!'}</h2>
-                    <input type="email" placeholder="Email" onChange={(event) => setEmail(event.target.value)} />
-                    <input type="password" placeholder="Password" onChange={(event) => setPassword(event.target.value)}/>
+                    <input type="email" placeholder="Email" onChange={(event) => setEmail(event.target.value)} required/>
+                    <input type="password" placeholder="Password" onChange={(event) => setPassword(event.target.value)} required/>
                     {
-                       !isLogin && <input type="password" placeholder="Confirm password" onChange={(event) => setConfirmPassword(event.target.value)} />
+                       !isLogin && <input type="password" placeholder="Confirm password" onChange={(event) => setConfirmPassword(event.target.value)} required/>
                     }
                     {
                        error && <p>{ error }</p>
