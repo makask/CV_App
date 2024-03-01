@@ -135,6 +135,14 @@ input::placeholder {
     color: #f3f0f0;
 }
 
+.left-panel-menu{
+    display: flex;
+    flex-direction: column;
+    margin-top: 14rem;
+    margin-left: 3rem;
+}
+
+
 /* Header */
 
 .header-container {

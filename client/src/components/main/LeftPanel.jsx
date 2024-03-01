@@ -4,11 +4,14 @@ function LeftPanel(){
 
     return(
         <div className="left-panel-container">
-            <h1>Home</h1>
-            <h1>Profile</h1>
-            <h1>CVs</h1>
-            <h1>Assignments</h1>
-            <h1>Job advertisements</h1>
+            <div className="left-panel-menu">
+                <h2>🏡 Home</h2>
+                <h2>🙋‍♂️ Profile</h2>
+                <h2>📰 CVs</h2>
+                <h2>📅 Assignments</h2>
+                <h2>📑Job advertisements</h2>
+            </div>
+           
         </div>
     );
 }
