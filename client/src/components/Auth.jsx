@@ -16,7 +16,6 @@ function Auth(){
     }
 
     async function handleSubmit(event, endpoint){
-        console.log(`${process.env.REACT_APP_SERVERURL}/${endpoint}`);
         event.preventDefault();
         if(!isLogin && password !== confirmPassword){
             setError('Passwords do not match!');
@@ -31,6 +30,7 @@ function Auth(){
     
 
         const data = await response.json();
+        
         if(data.detail){
             setError(data.detail);
         }else{

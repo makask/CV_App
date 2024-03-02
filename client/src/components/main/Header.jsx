@@ -6,6 +6,8 @@ function Header(){
 
     const [cookies, setCookie, removeCookie] = useCookies(null);
 
+    const userEmail = cookies.Email;
+
     function logOut(){
         removeCookie('Email');
         removeCookie('AuthToken');
@@ -17,7 +19,7 @@ function Header(){
                 <img src={profilePic} />
                 <div className="header-greeting">
                     <p>Hello there,</p>
-                    <h2>John Smith (@ John.Smith@gmail.com ) </h2>
+                    <h2>John Smith (@ { userEmail } ) </h2>
                 </div>
             </div>
             <div>

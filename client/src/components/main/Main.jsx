@@ -1,16 +1,35 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import LeftPanel from "./LeftPanel";
 import WorkArea from "./WorkArea";
 
-function Main(){
+function Main({ userEmail, authToken }){
+   
+    const[section, setSection] = useState("Home");
+    const[cvs, setCvs] = useState(null);
+
+    async function getUserCVs(){
+        try{
+            const response = await fetch(`${process.env.REACT_APP_SERVERURL}/cvs/${userEmail}`);
+            const json = await response.json();
+            setCvs(json);
+        } catch(err){
+            console.error(err);
+        }
+    }
+
+    useEffect(()=>{
+        if(authToken){
+            getUserCVs();
+        }
+    }, []);
 
     return(
         <div className="main-container">
-                <LeftPanel />
+                <LeftPanel setSection={setSection} />
                 <div className="workarea">
                     <Header /> 
-                    <WorkArea />                    
+                    <WorkArea section={section} cvs={cvs}/>             
                 </div>
         </div>
     );
