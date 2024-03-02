@@ -188,7 +188,8 @@ input::placeholder {
 .header-profile img{
     width: 120px;
     margin-right: 2rem;
-    border-radius: 50px;
+    border-radius: 50%;
+    box-shadow: rgba(0,0,0, 0.05) 0 6px 24px, rgba(0,0,0, 0.08) 0 0 0 1px;
 }
 
 /* Workarea */
@@ -259,6 +260,71 @@ input::placeholder {
 .cv-item-delete {
     background-color: var(--btn-red);
 }
+
+/* User Profile*/
+
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    width: 92%;
+    text-align: center;
+    border-radius: 10px;
+    border: 2px solid var(--dark-text);
+    font-weight: bold;
+    box-shadow: rgba(0,0,0, 0.05) 0 6px 24px, rgba(0,0,0, 0.08) 0 0 0 1px;
+    background-color: var(--secondary-background);
+    margin:3rem;
+}
+
+.profile-container img {
+    width: 300px;
+    border-radius: 50%;
+    padding: 3rem;
+}
+
+.pr-img{
+    display: flex;
+    margin-left: 8rem;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.pr-name{
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.pr-name input[type=text]{
+    border-radius: 10px;
+    border: 1px solid lightgray;
+}
+
+.pr-button {
+    display: flex;
+    justify-content: center;
+    margin: 3rem;
+}
+
+.pr-button input[type=submit]{
+    width: 14rem;
+    height: 4rem;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: none;
+    color:aliceblue;
+    background-color: var(--btn-green);
+    box-shadow: rgba(0,0,0, 0.05) 0 6px 24px, rgba(0,0,0, 0.08) 0 0 0 1px;
+}
+
+.pr-button input[type=submit]:hover{
+    cursor: pointer;
+    opacity: 0.9; 
+}
+
+
 
 
 

@@ -3,7 +3,7 @@ import Header from "./Header";
 import LeftPanel from "./LeftPanel";
 import WorkArea from "./WorkArea";
 
-function Main({ userEmail, authToken }){
+function Main({ userEmail, authToken, setIsCV, setCVid }){
    
     const[section, setSection] = useState("Home");
     const[cvs, setCvs] = useState(null);
@@ -29,7 +29,7 @@ function Main({ userEmail, authToken }){
                 <LeftPanel setSection={setSection} />
                 <div className="workarea">
                     <Header /> 
-                    <WorkArea section={section} cvs={cvs}/>             
+                    <WorkArea section={section} cvs={cvs} setIsCV={setIsCV} setCVid={setCVid} />             
                 </div>
         </div>
     );
