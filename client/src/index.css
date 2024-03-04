@@ -381,11 +381,6 @@ input::placeholder {
     border: 1px solid lightgray;
 }
 
-.add-cv-btns{
-    display: flex;
-    margin-top: 0.1rem;
-}
-
 .add-cv-btns button {
     height: 3rem;
     width: 46%;
@@ -401,7 +396,6 @@ input::placeholder {
     cursor: pointer;
     opacity: 0.5; 
 }
-
     
 
 

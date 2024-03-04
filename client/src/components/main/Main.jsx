@@ -39,12 +39,19 @@ function Main({ userEmail, authToken, setIsCV, setCVid }){
   
     return(
         <div className="main-container">
-                <LeftPanel setSection={setSection} section={section} />
+                <LeftPanel setSection={setSection} section={section} getUserCVs={getUserCVs} />
                 <div className="workarea">
                     { 
                         profileData?.map(item => <Header key={"0"} profileData={profileData} />)
                     }                 
-                    <WorkArea section={section} cvs={cvs} setIsCV={setIsCV} setCVid={setCVid} profileData={profileData} setProfileData={setProfileData}/>             
+                    <WorkArea 
+                        section={section} 
+                        cvs={cvs} setIsCV={setIsCV} 
+                        setCVid={setCVid} 
+                        profileData={profileData} 
+                        setProfileData={setProfileData}
+                        getUserCVs={getUserCVs}
+                    />             
                 </div>
         </div>
     );

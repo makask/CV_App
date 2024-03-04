@@ -1,6 +1,6 @@
 import React from "react";
 
-function CVitem({id, cv_title, setIsCV, setCVid }){
+function CVitem({id, cv_title, setIsCV, setCVid, getUserCVs }){
 
    function handleClick(){
     setIsCV(true);
@@ -12,9 +12,19 @@ function CVitem({id, cv_title, setIsCV, setCVid }){
     setCVid(id);
    }
 
-   function deleteCv(){
+   async function deleteCv(){
     setIsCV(false);
-    setCVid(id);
+    setCVid(id); 
+    try{
+        const response = await fetch(`${process.env.REACT_APP_SERVERURL}/cvs/${id}`, {
+            method: 'DELETE'
+        });
+        if(response.status === 200){
+            getUserCVs();
+        }
+    }catch(err){
+        console.error(err);
+    }
    }
 
     return (

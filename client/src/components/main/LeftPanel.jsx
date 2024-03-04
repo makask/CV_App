@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import AddCv from "../cv/AddCv";
 
-function LeftPanel({ setSection, section }){
+function LeftPanel({ setSection, section, getUserCVs }){
 
-    const [toggleForm, setToggleForm] = useState(false);
+    const [toggleForm, setToggleForm ] = useState(false);
 
     function handleToggleForm(){
         setToggleForm(!toggleForm);
@@ -23,7 +23,7 @@ function LeftPanel({ setSection, section }){
                     </h2>
                     { (section==="CVs" && !toggleForm) && <button onClick={handleToggleForm} className="lp-add-cv-btn">+</button> }
                 </div> 
-                { toggleForm && <AddCv toggleForm={handleToggleForm}/>}          
+                { toggleForm && <AddCv getUserCVs={getUserCVs} toggleForm={handleToggleForm}/>}          
                 <h2 onClick={()=>setSection('Assignments')}>📅 Assignments</h2>
                 <h2 onClick={()=>setSection('Advertisements')}>📑Job advertisements</h2>
             </div>

@@ -51,6 +51,28 @@ app.put("/profile/:email", async(req, res) => {
     }
 });
 
+// add new cv
+app.post('/cvs', async(req, res) => {
+    const { cv_title, user_email } = req.body;
+    try {
+        const newCV = await db.query("INSERT INTO cvs(cv_title, user_email) VALUES($1, $2)", [cv_title, user_email]);
+        res.json(newCV); 
+    }catch(err){
+        console.error(err);
+    }
+});
+
+// delete cv
+app.delete("/cvs/:id", async(req, res) => {
+    const { id } = req.params;
+    try{
+        const deleteCV = await db.query('DELETE FROM cvs WHERE id = $1', [id]);
+        res.json(deleteCV);
+    }catch(err){
+        console.error(err);
+    }
+});
+
 // post user profile data
 app.post('/profile/:userEmail', async(req, res) => {
     const { userEmail } = req.params;
