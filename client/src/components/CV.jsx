@@ -1,9 +1,10 @@
 import React from "react";
 
-function CV({ setIsCv, id }){
+function CV({ setIsCv,  setCVid, id }){
 
     function handleClick(){
         setIsCv(false);
+        setCVid(null);
     }
 
     return (

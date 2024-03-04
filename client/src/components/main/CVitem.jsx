@@ -3,19 +3,16 @@ import React from "react";
 function CVitem({id, cv_title, setIsCV, setCVid }){
 
    function handleClick(){
-    console.log("Upper clicked");
     setIsCV(true);
     setCVid(id);
    }
 
    function editCv(){
-    console.log("Edit clicked");
     setIsCV(true);
     setCVid(id);
    }
 
    function deleteCv(){
-    console.log("Delete clicked");
     setIsCV(false);
     setCVid(id);
    }

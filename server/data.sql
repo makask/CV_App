@@ -17,3 +17,9 @@ CREATE TABLE profiles (
 	profilePicUrl TEXT
 );
 
+
+
+INSERT INTO cvs (cv_title, user_email) VALUES ('TEST TITLE 1', 'test@test.com');
+
+DELETE from profiles WHERE email = 'test@test.com';
+

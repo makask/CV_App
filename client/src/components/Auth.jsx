@@ -15,6 +15,20 @@ function Auth(){
         setIsLogin(status);
     }
 
+    async function postDefaultProfileData(email){
+
+        const picUrl = "https://img.freepik.com/premium-vector/user-profile-icon-flat-style-member-avatar-vector-illustration-isolated-background-human-permission-sign-business-concept_157943-15752.jpg";
+        const fName = null; 
+        const lName = null;
+        
+        await fetch(`${process.env.REACT_APP_SERVERURL}/profile/${email}`, {
+            method: 'POST',
+            headers: { 'Content-Type' : 'application/json' },
+            body : JSON.stringify({  picUrl, fName, lName })
+        })
+    }
+    
+
     async function handleSubmit(event, endpoint){
         event.preventDefault();
         if(!isLogin && password !== confirmPassword){
@@ -36,6 +50,9 @@ function Auth(){
         }else{
             setCookie('Email', data.email);
             setCookie('AuthToken', data.token);
+            if(endpoint === 'signup'){
+                postDefaultProfileData(data.email);
+            }
             window.location.reload();
         }
     }

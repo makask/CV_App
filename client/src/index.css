@@ -291,15 +291,35 @@ input::placeholder {
     margin-bottom: 2rem;
 }
 
-.pr-name{
+.pr-name, .pr-url{
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 1rem;
 }
 
-.pr-name input[type=text]{
+.pr-url input {
     border-radius: 10px;
     border: 1px solid lightgray;
+    width:69%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: 1px solid lightgray;
+    box-shadow: rgba(0,0,0, 0.05) 0 6px 24px, rgba(0,0,0, 0.08) 0 0 0 1px;
+}
+
+.pr-name input {
+    border-radius: 10px;
+    border: 1px solid lightgray;
+    width: 30%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: 1px solid lightgray;
+    box-shadow: rgba(0,0,0, 0.05) 0 6px 24px, rgba(0,0,0, 0.08) 0 0 0 1px;
 }
 
 .pr-button {

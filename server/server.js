@@ -1,4 +1,4 @@
-import express from "express";
+import express, { response } from "express";
 import { db } from "./db.js";
 import cors from "cors";
 import { v4 as uuidv4 } from "uuid";
@@ -6,11 +6,15 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import {v2 as cloudinary} from 'cloudinary';
 
+
 const PORT = 8000;
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({limit: '50mb'}));
 
 // get all user CVs
 app.get('/cvs/:userEmail', async(req, res) => {
@@ -20,6 +24,44 @@ app.get('/cvs/:userEmail', async(req, res) => {
         res.json(cvs.rows);
     }catch(err){    
         console.error(err);
+    }
+});
+
+// get user profile data
+app.get('/profile/:userEmail', async(req, res) => {
+    const { userEmail } = req.params;
+    try{
+        const data = await db.query("SELECT * FROM profiles WHERE email = $1", [userEmail]);
+        res.json(data.rows);
+    }catch(err){
+        console.error(err);
+    }
+});
+
+// edit user profile
+app.put("/profile/:email", async(req, res) => {
+    const { email } = req.params;
+    const { first_name, last_name, profilepicurl } = req.body;
+    try{
+        const editProfile = await db.query('UPDATE profiles SET first_name = $1, last_name = $2, profilepicurl = $3 WHERE email = $4; ',
+        [ first_name, last_name, profilepicurl, email ]);
+        res.json(editProfile);
+    }catch(err){
+        console.error(err);
+    }
+});
+
+// post user profile data
+app.post('/profile/:userEmail', async(req, res) => {
+    const { userEmail } = req.params;
+    const { picUrl, fName, lName } = req.body;
+
+    try{
+        await db.query(`INSERT INTO profiles (email, first_name, last_name, profilepicurl) VALUES ($1, $2, $3, $4)`, [
+            userEmail, fName, lName, picUrl
+        ]);
+    }catch(err){
+        res.json(err.detail);
     }
 });
 
@@ -62,7 +104,16 @@ app.post('/login', async(req, res) => {
     }
 });
 
-/* Cloudinary */ 
+
+app.post("/uploadImage", async(req, res) => {
+   try {
+    // Upload the image
+        const response = await uploadImage(req.body.result);
+        res.json({ 'url' : response.url });
+    } catch (error) {
+        console.error(error);
+    }
+});
 
 cloudinary.config({
     secure: true,
@@ -70,11 +121,6 @@ cloudinary.config({
     api_key : process.env.API_KEY,
     api_secret : process.env.API_SECRET,
 });
-
-/*
- Uploads an image file
-*/
-
 
 const uploadImage = async (imagePath) => {
 
@@ -89,80 +135,11 @@ const uploadImage = async (imagePath) => {
     try {
       // Upload the image
       const result = await cloudinary.uploader.upload(imagePath, options);
-      return result.public_id;
+      return result;
     } catch (error) {
       console.error(error);
     }
 };
-
-//const publicId = await uploadImage(imagePath);
-//console.log(await "PublicID: "+ publicId);
-
-/* Gets details of an uploaded image */
-const getAssetInfo = async (publicId) => {
-
-    // Return colors in the response
-    const options = {
-      colors: true,
-    };
-
-    try {
-        // Get details about the asset
-        const result = await cloudinary.api.resource(publicId, options);
-        console.log(result);
-        return result.url;
-        } catch (error) {
-        console.error(error);
-    }
-};
-
-//////////////////////////////////////////////////////////////
-// Creates an HTML image tag with a transformation that
-// results in a circular thumbnail crop of the image  
-// focused on the faces, applying an outline of the  
-// first color, and setting a background of the second color.
-//////////////////////////////////////////////////////////////
-const createImageTag = (publicId, ...colors) => {
-    
-    // Set the effect color and background color
-    const [effectColor, backgroundColor] = colors;
-
-    // Create an image tag with transformations applied to the src URL
-    let imageTag = cloudinary.image(publicId, {
-      transformation: [
-        { width: 250, height: 250, gravity: 'faces', crop: 'thumb' },
-        { radius: 'max' },
-        { effect: 'outline:10', color: effectColor },
-        { background: backgroundColor },
-      ],
-    });
-
-    return imageTag;
-};
-
-//////////////////
-//
-// Main function
-//
-//////////////////
-/*(async () => {
-
-    // Set the image to upload
-    const imagePath = 'https://cloudinary-devs.github.io/cld-docs-assets/assets/images/happy_people.jpg';
-
-    // Upload the image
-    const publicId = await uploadImage(imagePath);
-
-    // Get the colors in the image
-    const colors = await getAssetInfo(publicId);
-
-    // Create an image tag, using two of the colors in a transformation
-    const imageTag = await createImageTag(publicId, colors[0][0], colors[1][0]);
-
-    // Log the image tag to the console
-    console.log(imageTag);
-
-})();*/
 
 
 app.listen(PORT, ()=> {

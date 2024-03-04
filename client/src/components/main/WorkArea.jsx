@@ -2,7 +2,7 @@ import React, {  } from "react";
 import CVitem from "./CVitem";
 import UserProfile from "./UserProfile";
 
-function WorkArea({ section, cvs, setIsCV, setCVid }){
+function WorkArea({ section, cvs, setIsCV, setCVid, profileData }){
     
     return (
         <div className="workarea-container">
@@ -12,7 +12,7 @@ function WorkArea({ section, cvs, setIsCV, setCVid }){
                 }
             </div>
             }
-            { section==="Profile" && <UserProfile />}
+            { section==="Profile" && <UserProfile profileData={ profileData }/>}
             { section==="CVs" && <div className="cv-item-container">
                 { 
                     cvs?.map(cv => <CVitem id={cv.id} key={cv.id} cv_title={cv.cv_title} setIsCV = { setIsCV } setCVid={ setCVid } />)                 
