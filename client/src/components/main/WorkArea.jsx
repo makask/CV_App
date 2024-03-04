@@ -1,5 +1,5 @@
 import React, {  } from "react";
-import CVitem from "./CVitem";
+import CVitem from "../cv/CVitem";
 import UserProfile from "./UserProfile";
 
 function WorkArea({ section, cvs, setIsCV, setCVid, profileData }){

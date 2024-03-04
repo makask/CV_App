@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Auth from "./components/Auth";
 import { useCookies } from "react-cookie";
 import Main from "./components/main/Main";
-import CV from "./components/CV";
+import CV from "./components/cv/CV";
 
 function App() {
   

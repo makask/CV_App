@@ -39,7 +39,7 @@ function Main({ userEmail, authToken, setIsCV, setCVid }){
   
     return(
         <div className="main-container">
-                <LeftPanel setSection={setSection} />
+                <LeftPanel setSection={setSection} section={section} />
                 <div className="workarea">
                     { 
                         profileData?.map(item => <Header key={"0"} profileData={profileData} />)
