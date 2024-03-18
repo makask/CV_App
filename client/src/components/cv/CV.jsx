@@ -1,6 +1,8 @@
 import React from "react";
+import CVProfile from "./CVProfile";
+import CVContact from "./CVContact";
 
-function CV({ setIsCv,  setCVid, id }){
+function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id }){
 
     function handleClick(){
         setIsCv(false);
@@ -8,10 +10,15 @@ function CV({ setIsCv,  setCVid, id }){
     }
 
     return (
-        <div>
-            <h1>CV test page</h1>
-            <h1>Id: {id}</h1>
-            <button onClick={handleClick}>Go Back</button>
+        <div className="cv">
+                <button onClick={handleClick}>Go Back {id}</button>
+            <div className="cv-container">
+                <div className="left-panel">
+                    <CVProfile profileData={profileData} getProfileData={getProfileData} setProfileData={setProfileData}/>
+                    <CVContact />
+                </div>
+                <div className="right-panel"></div>
+            </div>
         </div>
     );
 }

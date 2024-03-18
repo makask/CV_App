@@ -6,6 +6,7 @@ function UserProfile({ profileData, getProfileData }){
     const [cookies] = useCookies(null);
     const userEmail = cookies.Email;
     const [imageUrl, setImageUrl] = useState(profileData[0].profilepicurl);
+    
     const[profile, setProfile] = useState({
         fName: profileData[0].first_name,
         lName: profileData[0].last_name

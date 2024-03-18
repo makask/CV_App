@@ -51,15 +51,47 @@ app.put("/profile/:email", async(req, res) => {
     }
 });
 
+// get cv contacts
+app.get('/cv/contact/:id', async(req, res) => {
+    //const cvs = await db.query("SELECT * FROM cvs WHERE user_email = $1", [userEmail]);
+    //res.json(cvs.rows);
+    const { id } = req.params;
+    try{
+        const contacts = await db.query("SELECT * FROM cv_contact WHERE id = $1", [id]);
+        res.json(contacts.rows);
+    }catch(err){
+        console.log(error);
+    }
+});
+
+// add new default cv contact
+app.post('/cv/contact/:id', async(req, res) => {
+    const {id} = req.params;
+    try{
+        const newContact = await db.query("INSERT INTO cv_contact(id, title, phone, email, user_address, facebook, linkedin, github) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
+        [id, "CONTACT INFO", "", "", "", "", "", ""]);
+        res.json(newContact);
+    }catch(err){    
+        console.error(err);
+    }
+});
+
+let lastInsertedCvId = null;
 // add new cv
 app.post('/cvs', async(req, res) => {
     const { cv_title, user_email } = req.body;
     try {
-        const newCV = await db.query("INSERT INTO cvs(cv_title, user_email) VALUES($1, $2)", [cv_title, user_email]);
-        res.json(newCV); 
+        const newCV = await db.query("INSERT INTO cvs(cv_title, user_email) VALUES($1, $2) RETURNING id", [cv_title, user_email]);
+        lastInsertedCvId = newCV.rows[0].id;
+        res.json(newCV);
     }catch(err){
         console.error(err);
     }
+});
+
+// get id of last inserted cv
+app.get('/getCvId', async(req, res) => {
+    res.json({id: lastInsertedCvId });
 });
 
 // delete cv

@@ -15,17 +15,25 @@ function AddCv({ toggleForm, getUserCVs }){
     {   
         event.preventDefault();
         try{
-            console.log(title);
-            console.log(userEmail);
             const response = await fetch(`${process.env.REACT_APP_SERVERURL}/cvs`, {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json'},
                 body: JSON.stringify({ cv_title: title, user_email: userEmail})
             });
+            const data = await fetch(`${process.env.REACT_APP_SERVERURL}/getCvId`).then(res => res.json());
+            const id = data.id;
+           
+            const contactResponse = await fetch(`${process.env.REACT_APP_SERVERURL}/cv/contact/${id}`, {
+                method: "POST",
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ id: id })
+            });
+            
             getUserCVs();
         }catch(err){
             console.error(err);
         }
+
         toggleForm();
     }
 

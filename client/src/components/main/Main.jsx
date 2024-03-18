@@ -3,11 +3,10 @@ import Header from "./Header";
 import LeftPanel from "./LeftPanel";
 import WorkArea from "./WorkArea";
 
-function Main({ userEmail, authToken, setIsCV, setCVid }){
+function Main({ userEmail, authToken, setIsCV, setCVid, profileData, getProfileData, setProfileData }){
    
     const[section, setSection] = useState("Home");
     const[cvs, setCvs] = useState([]);
-    const[profileData, setProfileData] = useState(null);
     
     async function getUserCVs(){
         try{
@@ -19,17 +18,6 @@ function Main({ userEmail, authToken, setIsCV, setCVid }){
         }
     }
 
-    async function getProfileData(userEmail){
-        try{
-            const response = await fetch(`${process.env.REACT_APP_SERVERURL}/profile/${userEmail}`);
-            const json = await response.json();
-            setProfileData(json);
-        }catch(err){
-            console.error(err);
-        }
-      }
-    
-    
     useEffect(()=>{
         if(authToken){
            getUserCVs();
@@ -58,4 +46,3 @@ function Main({ userEmail, authToken, setIsCV, setCVid }){
 }
 
 export default Main;
-

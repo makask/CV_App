@@ -17,6 +17,25 @@ CREATE TABLE profiles (
 	profilePicUrl TEXT
 );
 
+CREATE TABLE cv_profile (
+    id INTEGER REFERENCES cvs(id) UNIQUE,
+    profilePicUrl TEXT,
+    fullName VARCHAR(255)
+);
+
+CREATE TABLE cv_contact (
+  id INTEGER REFERENCES cvs(id) ON DELETE CASCADE,
+  title VARCHAR(255),
+  phone VARCHAR(255),
+  email VARCHAR(255),
+  user_address VARCHAR(255),
+  facebook VARCHAR(255),
+  linkedin VARCHAR(255),
+  github VARCHAR(255)
+);
+
+
+
 
 
 INSERT INTO cvs (cv_title, user_email) VALUES ('TEST TITLE 1', 'test@test.com');
