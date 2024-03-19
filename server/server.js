@@ -87,6 +87,41 @@ app.post('/cv/contact/:id', async(req, res) => {
     }
 });
 
+// add new default cv education title
+app.post('/cv/educationtitle/:id', async(req, res) => {
+    const{id} = req.params;
+    try{
+        const defEdTitle = await db.query("INSERT INTO cv_education_title(id, title) VALUES ($1, $2)", [id, "EDUCATION"]);
+        res.json(defEdTitle);
+    }catch(err){
+        console.error(err);
+    }
+})
+
+// get cv education title
+app.get('/cv/educationtitle/:id', async(req, res) => {
+    const{id} = req.params;
+    try{    
+        const response = await db.query("SELECT * FROM cv_education_title WHERE id = $1", [id]);
+        res.json(response.rows);
+    }catch(err){
+        console.error(err);
+    }
+});
+
+// edit cv education title
+app.put('/cv/educationtitle/:id', async(req, res) => {
+    const { id } = req.params;
+    const { title } = req.body;
+    try{
+        const editEducationTitle = await db.query('UPDATE cv_education_title SET title = $1 WHERE id = $2',
+        [title,id]);
+        res.json(editEducationTitle);
+    }catch(err){    
+        console.error(err);
+    }
+});
+
 let lastInsertedCvId = null;
 // add new cv
 app.post('/cvs', async(req, res) => {

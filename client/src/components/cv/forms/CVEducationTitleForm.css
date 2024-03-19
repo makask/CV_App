@@ -1,0 +1,13 @@
+.education-title-input{
+    height: 20px;
+    padding: 3px;
+    border-radius: 5px;
+    width: 134%;
+}
+
+.btns-div{
+    display: flex;
+    align-items: center;
+    color: #fff;
+    margin-left: 27%;
+}

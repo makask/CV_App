@@ -34,11 +34,34 @@ CREATE TABLE cv_contact (
   github VARCHAR(255)
 );
 
+CREATE TABLE cv_education_title(
+  id INTEGER REFERENCES cvs(id) ON DELETE CASCADE,
+  title VARCHAR(255)
+);
 
+CREATE TABLE cv_languages_title(
+  id INTEGER REFERENCES cvs(id) ON DELETE CASCADE,
+  title VARCHAR(255)
+);
 
+CREATE TABLE cv_drivers_licence_title(
+  id INTEGER REFERENCES cvs(id) ON DELETE CASCADE,
+  title VARCHAR(255)
+);
 
+CREATE TABLE work_experience_title(
+  id INTEGER REFERENCES cvs(id) ON DELETE CASCADE,
+  title VARCHAR(255)
+);
 
-INSERT INTO cvs (cv_title, user_email) VALUES ('TEST TITLE 1', 'test@test.com');
+CREATE TABLE skills_title(
+  id INTEGER REFERENCES cvs(id) ON DELETE CASCADE,
+  title VARCHAR(255)
+);
 
-DELETE from profiles WHERE email = 'test@test.com';
+CREATE TABLE hobbies_title(
+  id INTEGER REFERENCES cvs(id) ON DELETE CASCADE,
+  title VARCHAR(255)
+);
+
 

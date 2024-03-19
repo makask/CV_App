@@ -1,0 +1,23 @@
+.contactInfo-title{
+   display: flex;
+   align-items: center;
+}
+
+.contactInfo-title:hover{
+    border: 1px solid rgb(184, 178, 178);
+    border-radius: 10px;
+    cursor: pointer;
+    opacity: 80%;
+}
+
+.contactInfo-title h2{
+    color: #fff;
+}
+
+.add-school{
+   margin-left: 30px;
+}
+
+.education-title{
+    width: 400px;
+}

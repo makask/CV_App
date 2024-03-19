@@ -459,7 +459,6 @@ input::placeholder {
     color: #fff;
     font-size: 1.5em;
     margin-top: 20px;
-    text-transform: uppercase;
     text-align: center;
     font-weight: 600;
     line-height: 1.4em;
@@ -475,8 +474,7 @@ input::placeholder {
 }
 
 .title {
-    color: #bdb7b7;
-    text-transform: uppercase;
+    color: #fff;
     font-weight: 600;
     letter-spacing: 1px;
     margin-bottom: 20px;
@@ -505,6 +503,27 @@ input::placeholder {
     color: #fff;
     font-weight: 300;
 }
+
+.contactInfo.education li {
+    margin-bottom: 15px;
+}
+
+.contactInfo.education h5 {
+    color: #03a9f4;
+    font-weight: 500;
+}
+
+.contactInfo.education h4:nth-child(2) {
+    color: #fff;
+    font-weight: 500;
+}
+
+.contactInfo.education h4 {
+    color:#fff;
+    font-weight: 300;
+}
+
+
 
 
 
