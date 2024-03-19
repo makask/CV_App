@@ -9,8 +9,6 @@ function LeftPanel({ setSection, section, getUserCVs }){
         setToggleForm(!toggleForm);
     }
 
-    console.log(toggleForm);
-
     return(
         <div className="left-panel-container">
             <div className="left-panel-menu">

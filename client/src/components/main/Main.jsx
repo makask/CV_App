@@ -3,11 +3,10 @@ import Header from "./Header";
 import LeftPanel from "./LeftPanel";
 import WorkArea from "./WorkArea";
 
-function Main({ userEmail, authToken, setIsCV, setCVid, profileData, getProfileData, setProfileData }){
+function Main({ userEmail, authToken,cvId, setIsCV, setCVid, profileData, getProfileData, setProfileData }){
    
     const[section, setSection] = useState("Home");
     const[cvs, setCvs] = useState([]);
-    
     async function getUserCVs(){
         try{
             const response = await fetch(`${process.env.REACT_APP_SERVERURL}/cvs/${userEmail}`);

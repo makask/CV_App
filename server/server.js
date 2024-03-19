@@ -53,8 +53,6 @@ app.put("/profile/:email", async(req, res) => {
 
 // get cv contacts
 app.get('/cv/contact/:id', async(req, res) => {
-    //const cvs = await db.query("SELECT * FROM cvs WHERE user_email = $1", [userEmail]);
-    //res.json(cvs.rows);
     const { id } = req.params;
     try{
         const contacts = await db.query("SELECT * FROM cv_contact WHERE id = $1", [id]);
@@ -64,12 +62,25 @@ app.get('/cv/contact/:id', async(req, res) => {
     }
 });
 
+// edit cv contacts
+app.put('/cv/contact/:id', async(req, res) => {
+    const { id } = req.params;
+    const { title, phone, email, user_address, facebook, linkedin, github } = req.body;
+    try{
+        const editContacts = await db.query('UPDATE cv_contact SET title = $1, phone = $2, email = $3, user_address = $4, facebook = $5, linkedin = $6, github = $7 WHERE id = $8',
+        [title, phone, email, user_address, facebook, linkedin, github, id]);
+        res.json(editContacts);
+    }catch(err){    
+        console.error(err);
+    }
+});
+
 // add new default cv contact
 app.post('/cv/contact/:id', async(req, res) => {
     const {id} = req.params;
     try{
         const newContact = await db.query("INSERT INTO cv_contact(id, title, phone, email, user_address, facebook, linkedin, github) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
-        [id, "CONTACT INFO", "", "", "", "", "", ""]);
+        [id, "CONTACT INFO", "Phone", "Email", "Address", "Facebook", "Linkedin", "Github"]);
         res.json(newContact);
     }catch(err){    
         console.error(err);

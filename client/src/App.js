@@ -27,8 +27,27 @@ function App() {
   return (
     <div> 
           { !authToken && <Auth />}
-          { (authToken && !isCV) && <Main profileData={profileData} getProfileData={getProfileData} setProfileData={setProfileData} userEmail={userEmail} authToken={authToken} setIsCV={setIsCV} setCVid={setCVid} />}
-          { (authToken && isCV) && <CV profileData={profileData} getProfileData={getProfileData} setProfileData={setProfileData} setIsCv={setIsCV} id={cvId} setCVid={setCVid} />}
+          { (authToken && !isCV) && 
+            <Main 
+              profileData={profileData} 
+              getProfileData={getProfileData} 
+              setProfileData={setProfileData} 
+              userEmail={userEmail} 
+              authToken={authToken} 
+              cvId={cvId}
+              setIsCV={setIsCV} 
+              setCVid={setCVid} 
+
+          />}
+          { (authToken && isCV) && 
+            <CV 
+              profileData={profileData} 
+              getProfileData={getProfileData} 
+              setProfileData={setProfileData} 
+              setIsCv={setIsCV} 
+              id={cvId} 
+              setCVid={setCVid} 
+          />}
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useCookies } from "react-cookie";
 
-function CVProfile({profileData, getProfileData, setProfileData}){
+function CVProfile({profileData}){
 
     const [cookies] = useCookies(null);
     const userEmail = cookies.Email;
@@ -23,7 +23,7 @@ function CVProfile({profileData, getProfileData, setProfileData}){
                 <img src={imgUrl} alt="profile-picture" onClick={handleClick}/>
                 <input id="openImgUpload" type="file" style={{display:"none"}}/>
             </div>
-            <h2 onClick={changeName}>{fullName}</h2>
+            <h2 onClick={changeName}>{fullName}</h2> 
         </div>
     );
 }
