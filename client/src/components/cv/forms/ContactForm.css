@@ -1,0 +1,73 @@
+.contactInfo-form-div{
+    border: 1px solid rgb(184, 178, 178);
+    padding-bottom: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.contactInfo-form-div:hover{
+    cursor: pointer;
+}
+
+.contactInfo-form-div ul {
+    position: relative;
+}
+
+.contactInfo-form-div ul li {
+    position: relative;
+    list-style: none;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.contactInfo-form-div ul li .icon {
+    display: inline-block;
+    width: 30px;
+    font-size: 18px;
+    color: #03a9f4;
+}
+
+.contactInfo-form-div ul li span {
+    color: #fff;
+    font-weight: 300;
+}
+
+
+.contactInfo-form input{
+    height: 16px;
+    width: 70%;
+    border-radius: 2px;
+    border: none;
+}
+
+.contactInfo-form input[type="text"]::placeholder{
+    font: 1rem/2 'Poppins'; 
+}
+
+.contactInfo-form input[type="text"]{
+    font: 1rem/2 'Poppins'; 
+}
+
+.contactInfo-form input[name="title"]{
+    width: 76%;
+}
+
+.cancel{
+    float: right;
+    margin-right: 20px;
+    color:white;
+}
+
+.cancel:hover {
+    opacity: 80%;
+}
+
+.contactInfo-save-form{
+    float: right;
+    margin-right: 20px;
+}
+
+.contactInfo-save-form:hover{
+    opacity: 80%;
+}
+

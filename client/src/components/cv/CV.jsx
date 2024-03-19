@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useRef } from "react";
 import CVProfile from "./CVProfile";
 import CVContact from "./CVContact";
+import './CV.css';
+
+import { useReactToPrint } from 'react-to-print';
+
 
 function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id }){
 
@@ -9,17 +13,29 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
         setCVid(null);
     }
 
-    return (
-        <div className="cv">
-                <button onClick={handleClick}>Go Back {id}</button>
-            <div className="cv-container">
-                <div className="left-panel">
-                    <CVProfile profileData={profileData} getProfileData={getProfileData} setProfileData={setProfileData}/>
-                    <CVContact />
+    const componentRef = useRef();
+
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+    });
+    
+
+    return (       
+            <div className="cv">
+                <button className="btn-cv-return" onClick={handleClick}>Go Back {id}</button>
+                    <div className="cv-print-area" ref={componentRef}>
+                        <div className="cv-container">
+                            <div className="left-panel">
+                                <CVProfile profileData={profileData} getProfileData={getProfileData} setProfileData={setProfileData}/>
+                                <CVContact />
+                            </div>
+                            <div className="right-panel">
+                                dsadadsadsadsa
+                            </div>
+                    </div>
                 </div>
-                <div className="right-panel"></div>
+                <button className="btn-cv-print" onClick={handlePrint}>Download as PDF</button>
             </div>
-        </div>
     );
 }
 
