@@ -1,0 +1,30 @@
+.contactInfo.education{
+    display: flex;
+}
+
+.contactInfo.education h5, .contactInfo.education h4 {
+    margin-left: 40px;
+    margin-top:10px;
+    margin-bottom: -2px;
+    max-width: 26rem;
+}
+
+.education-item-left-panel{
+    width: 86%;
+}
+
+.fa.fa-trash-o{
+    color: #fff;
+    margin-left: 2.4rem;
+    margin-top: 1rem;
+}
+
+.fa.fa-trash-o:hover{
+    color: lightgray;
+}
+
+
+
+
+
+

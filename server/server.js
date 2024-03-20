@@ -122,6 +122,51 @@ app.put('/cv/educationtitle/:id', async(req, res) => {
     }
 });
 
+// get all educational institutions
+app.get('/cv/institution/:cvId', async(req, res) => {
+    const{cvId} = req.params;
+    try{
+        const institutions = await db.query("SELECT * FROM institution WHERE cv_id = $1", [cvId]);
+        res.json(institutions.rows);
+    }catch(err){
+        console.error(err);
+    }
+});
+
+// add new education facility
+app.post('/cv/institution/:id', async(req, res) => {
+    const{id} = req.params;
+    try{
+        const response = await db.query("INSERT INTO institution(years_of_study, speciality, school_name, cv_id) VALUES ($1, $2, $3, $4)", 
+        ["Years of study", "Speciality", "Educational Institution", id]);
+        res.json(response);
+    }catch(err){
+        console.error(err);
+    }
+});
+
+// delete educational institution
+app.delete('/cv/institution/:id', async(req, res) => {
+    const{id} = req.params;
+    try{
+        const deleteInstitution = await db.query('DELETE FROM institution WHERE id = $1', [id]);
+        res.json(deleteInstitution);
+    }catch(err){
+        console.error(err);
+    }
+});
+
+// add new default cv languages title
+app.post('/cv/languagestitle/:id', async(req, res) => {
+    const{id} = req.params;
+    try{
+        const defLangTitle = await db.query("INSERT INTO cv_languages_title(id, title) VALUES ($1, $2)", [id, "LANGUAGES"]);
+        res.json(defLangTitle);
+    }catch(err){
+        console.error(err);
+    }
+})
+
 let lastInsertedCvId = null;
 // add new cv
 app.post('/cvs', async(req, res) => {

@@ -40,7 +40,7 @@ function CVEducationTitleForm({ id, toggleForm, educationTitle, getEducationTitl
                     <h3 className="title"><input className="education-title-input" name="title" value={title.title} onChange={handleChange}/></h3>
                 <div className="btns-div">
                     <span className="contactInfo-save-form"><i onClick={editTitle} className="fa fa-check-circle-o fa-lg" aria-hidden="true"></i></span>
-                    <h2 onClick={toggleForm}>x</h2>
+                    <h2 className="education-cancel-edit" onClick={toggleForm}>x</h2>
                 </div>
             </div>
         </form>

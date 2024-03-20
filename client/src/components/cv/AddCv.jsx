@@ -35,6 +35,12 @@ function AddCv({ toggleForm, getUserCVs }){
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({ id: id })
             });
+            // Add default cv languages title
+            const defaultLangTitle = await fetch(`${process.env.REACT_APP_SERVERURL}/cv/languagestitle/${id}`, {
+                method: "POST",
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ id: id})
+            });
             
             getUserCVs();
         }catch(err){

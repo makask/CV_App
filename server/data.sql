@@ -39,6 +39,14 @@ CREATE TABLE cv_education_title(
   title VARCHAR(255)
 );
 
+CREATE TABLE institution(
+  id SERIAL PRIMARY KEY,
+  years_of_study VARCHAR(255),
+  speciality VARCHAR(255),
+  school_name VARCHAR(255),
+  cv_id INTEGER REFERENCES cvs(id) ON DELETE CASCADE, 
+);
+
 CREATE TABLE cv_languages_title(
   id INTEGER REFERENCES cvs(id) ON DELETE CASCADE,
   title VARCHAR(255)

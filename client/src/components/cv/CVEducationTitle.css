@@ -7,7 +7,6 @@
     border: 1px solid rgb(184, 178, 178);
     border-radius: 10px;
     cursor: pointer;
-    opacity: 80%;
 }
 
 .contactInfo-title h2{
@@ -18,6 +17,14 @@
    margin-left: 30px;
 }
 
+.add-school:hover{
+    opacity: 80%;
+}
+
 .education-title{
     width: 400px;
+}
+
+.education-title:hover{
+    opacity: 80%;
 }
