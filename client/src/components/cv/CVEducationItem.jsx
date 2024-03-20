@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import './CVEducationItem.css';
+import InstitutionForm from "./forms/InstitutionForm";
 
 
 // contactInfo education
 function CVEducationItem({ id,cvId, getAllInstitutions, years, speciality, school }){
 
     const[mouseHover, setMouseHover] = useState(false);
+    const[wasClicked, setWasClicked] = useState(false);
 
     function handleOnMouseEnter(){
         setMouseHover(true);
@@ -13,6 +15,10 @@ function CVEducationItem({ id,cvId, getAllInstitutions, years, speciality, schoo
 
     function handleOnMouseLeave(){
         setMouseHover(false);
+    }
+
+    function toggleForm(){
+        setWasClicked(!wasClicked);
     }
 
     async function deleteEducationItem(){
@@ -29,7 +35,8 @@ function CVEducationItem({ id,cvId, getAllInstitutions, years, speciality, schoo
     }
 
     return(
-        <div className="contactInfo education" onMouseEnter={handleOnMouseEnter} onMouseLeave={handleOnMouseLeave}>
+        wasClicked ? <InstitutionForm id={id} cvId={cvId} toggleForm={toggleForm} years={years} speciality={speciality} school={school} getAllInstitutions={getAllInstitutions} /> :
+        <div className="contactInfo education" onMouseEnter={handleOnMouseEnter} onMouseLeave={handleOnMouseLeave} onClick={toggleForm}>
             <div className="education-item-left-panel">
                 <h5>{years}</h5>
                 <h4>{speciality}</h4>

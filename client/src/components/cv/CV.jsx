@@ -16,6 +16,7 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
     const[contactData, setContactData] = useState(null);
     const[educationTitle, setEducationTitle] = useState(null);
     const[institutions, setInstitutions] = useState(null);
+    console.log(institutions);
 
     async function getContactsData(id){
         try{
@@ -87,8 +88,9 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
                                     />)
                                 }
                                 {
-                                    institutions?.map(institution => <CVEducationItem 
-                                    key={institution.id} id={institution.id} 
+                                    institutions?.map((institution) => <CVEducationItem 
+                                    key={institution.id} 
+                                    id={institution.id} 
                                     cvId={id} 
                                     getAllInstitutions={getAllInstitutions} 
                                     years = {institution.years_of_study}  
@@ -96,7 +98,6 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
                                     school = {institution.school_name}
                                     />)
                                 }
-                                
                                 <CVLanguagesTitle />
                                 <CVDriversLicenceTitle />
                             </div>

@@ -1,0 +1,13 @@
+.education-item-left-panel input[type="text"]{
+    height: 14px;
+    font-size: 12px;
+    font-weight: 700;
+    width: 22.3rem;
+    border-style: none;
+    border-radius: 2px;
+}
+
+.education-item-right-panel h4:hover{
+    opacity: 70%;
+}
+

@@ -126,7 +126,7 @@ app.put('/cv/educationtitle/:id', async(req, res) => {
 app.get('/cv/institution/:cvId', async(req, res) => {
     const{cvId} = req.params;
     try{
-        const institutions = await db.query("SELECT * FROM institution WHERE cv_id = $1", [cvId]);
+        const institutions = await db.query("SELECT * FROM institution WHERE cv_id = $1 ORDER BY id", [cvId]);
         res.json(institutions.rows);
     }catch(err){
         console.error(err);
@@ -140,6 +140,19 @@ app.post('/cv/institution/:id', async(req, res) => {
         const response = await db.query("INSERT INTO institution(years_of_study, speciality, school_name, cv_id) VALUES ($1, $2, $3, $4)", 
         ["Years of study", "Speciality", "Educational Institution", id]);
         res.json(response);
+    }catch(err){
+        console.error(err);
+    }
+});
+
+// Edit institution
+app.put('/cv/institution/:id', async(req, res) => {
+    const{id} = req.params;
+    const{years_of_study, speciality, school_name } = req.body;
+    try{
+        const editInstitution = await db.query('UPDATE institution SET years_of_study = $1, speciality = $2, school_name = $3 WHERE id = $4', 
+        [years_of_study, speciality, school_name, id]);
+        res.json(editInstitution);
     }catch(err){
         console.error(err);
     }
