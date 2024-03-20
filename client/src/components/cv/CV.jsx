@@ -15,9 +15,9 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
 
     const[contactData, setContactData] = useState(null);
     const[educationTitle, setEducationTitle] = useState(null);
+    const[languagesTitle, setLanguagesTitle] = useState(null);
     const[institutions, setInstitutions] = useState(null);
-    console.log(institutions);
-
+    
     async function getContactsData(id){
         try{
             const response = await fetch(`${process.env.REACT_APP_SERVERURL}/cv/contact/${id}`);
@@ -48,10 +48,21 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
         }
     }
 
+    async function getLanguagesTitle(id){
+        try{
+            const response = await fetch(`${process.env.REACT_APP_SERVERURL}/cv/languagestitle/${id}`);
+            const json = await response.json();
+            setLanguagesTitle(json);
+        }catch(err){
+            console.error(err);
+        }
+    }
+
     useEffect(()=>{
         getContactsData(id);
         getEducationTitle(id);
         getAllInstitutions(id);
+        getLanguagesTitle(id);
     },[]);
     
     function handleClick(){
@@ -80,7 +91,8 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
                                 }
                                 {
                                     educationTitle?.map(title => <CVEducationTitle 
-                                    key={"0"} id={title.id} 
+                                    key={"0"} 
+                                    id={title.id} 
                                     educationTitle={educationTitle} 
                                     getEducationTitle={getEducationTitle}
                                     getAllInstitutions={getAllInstitutions}
@@ -98,7 +110,15 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
                                     school = {institution.school_name}
                                     />)
                                 }
-                                <CVLanguagesTitle />
+                                {
+                                    languagesTitle?.map(title => <CVLanguagesTitle 
+                                        key={"0"}
+                                        id={title.id}
+                                        cvId={id}
+                                        languagesTitle={languagesTitle}
+                                        getLanguagesTitle={getLanguagesTitle}
+                                    />)
+                                }
                                 <CVDriversLicenceTitle />
                             </div>
                             <div className="right-panel">

@@ -126,7 +126,7 @@ app.put('/cv/educationtitle/:id', async(req, res) => {
 app.get('/cv/institution/:cvId', async(req, res) => {
     const{cvId} = req.params;
     try{
-        const institutions = await db.query("SELECT * FROM institution WHERE cv_id = $1 ORDER BY id", [cvId]);
+        const institutions = await db.query("SELECT * FROM institution WHERE cv_id = $1 ORDER BY id DESC", [cvId]);
         res.json(institutions.rows);
     }catch(err){
         console.error(err);
@@ -165,6 +165,30 @@ app.delete('/cv/institution/:id', async(req, res) => {
         const deleteInstitution = await db.query('DELETE FROM institution WHERE id = $1', [id]);
         res.json(deleteInstitution);
     }catch(err){
+        console.error(err);
+    }
+});
+
+// get cv language title
+app.get('/cv/languagestitle/:id', async(req, res) => {
+    const{id} = req.params;
+    try{    
+        const response = await db.query("SELECT * FROM cv_languages_title WHERE id = $1", [id]);
+        res.json(response.rows);
+    }catch(err){
+        console.error(err);
+    }
+});
+
+// edit cv languages title
+app.put('/cv/languagestitle/:id', async(req, res) => {
+    const { id } = req.params;
+    const { title } = req.body;
+    try{
+        const editEducationTitle = await db.query('UPDATE cv_languages_title SET title = $1 WHERE id = $2',
+        [title,id]);
+        res.json(editEducationTitle);
+    }catch(err){    
         console.error(err);
     }
 });

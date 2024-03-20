@@ -1,24 +1,32 @@
 import React, {useState} from "react";
+import './CVEducationTitle.css';
+import './forms/CVLanguagesTitleForm';
+import CVLanguagesTitleForm from "./forms/CVLanguagesTitleForm";
 
-function CVLanguagesTitle(){
+function CVLanguagesTitle({ id, cvId, languagesTitle, getLanguagesTitle }){
 
-    const[onHover, setOnHover] = useState(false);
+    const [wasClicked, setWasClicked] = useState(false);
+    const [onHover, setOnHover] = useState(false);
 
-    function mouseEnter(){
+    function toggleForm(){
+        setWasClicked(!wasClicked);
+    }
+
+    function handleMouseEnter(){
         setOnHover(true);
     }
 
-    function mouseLeave(){
+    function handleMouseLeave(){
         setOnHover(false);
     }
 
     return(
-        <div className="contactInfo-title" onMouseEnter={mouseEnter} onMouseLeave={mouseLeave}>
-            <h3 className="title">Languages</h3>
+        wasClicked ? <CVLanguagesTitleForm id={id} cvId={cvId} getLanguagesTitle={getLanguagesTitle} languagesTitle={languagesTitle} toggleForm={toggleForm}/> : 
+        <div className="contactInfo-title" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+            <h3 className="title education-title" onClick={toggleForm}>{languagesTitle[0].title}</h3>
             {
                 onHover && <h2 className="add-school">+</h2>
-            }
-            
+            }     
         </div>
     );
 }
