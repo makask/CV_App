@@ -5,6 +5,7 @@ import CVEducationTitle from "./CVEducationTitle";
 import CVLanguagesTitle from "./CVLanguagesTitle";
 import CVDriversLicenceTitle from "./CVDriversLicenceTitle";
 import CVEducationItem from "./CVEducationItem";
+import CVLanguageItem from "./CVLanguageItem";
 import './CV.css';
 
 
@@ -17,6 +18,7 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
     const[educationTitle, setEducationTitle] = useState(null);
     const[languagesTitle, setLanguagesTitle] = useState(null);
     const[institutions, setInstitutions] = useState(null);
+    const[languages, setLanguages] = useState(null);
     
     async function getContactsData(id){
         try{
@@ -58,11 +60,22 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
         }
     }
 
+    async function getAllLanguages(id){
+        try{
+            const response = await fetch(`${process.env.REACT_APP_SERVERURL}/cv/languages/${id}`);
+            const json = await response.json();
+            setLanguages(json);
+        }catch(err){
+            console.error(err);
+        }
+    }
+
     useEffect(()=>{
         getContactsData(id);
         getEducationTitle(id);
         getAllInstitutions(id);
         getLanguagesTitle(id);
+        getAllLanguages(id);
     },[]);
     
     function handleClick(){
@@ -117,6 +130,16 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
                                         cvId={id}
                                         languagesTitle={languagesTitle}
                                         getLanguagesTitle={getLanguagesTitle}
+                                        getAllLanguages={getAllLanguages}
+                                    />)
+                                }
+                                {
+                                    languages?.map(language => <CVLanguageItem 
+                                        key={language.id}
+                                        id={language.id}
+                                        cvId={language.cv_id}
+                                        language={language.language}
+                                        getAllLanguages={getAllLanguages}
                                     />)
                                 }
                                 <CVDriversLicenceTitle />

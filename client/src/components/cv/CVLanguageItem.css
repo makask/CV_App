@@ -1,0 +1,27 @@
+.contactInfo.languages{
+    height: 2rem;
+    display: flex;
+    align-items: center;
+}
+
+
+.language{
+    display: flex;
+    padding-top: 10px;
+    color: #fff;
+    font-weight: 300;
+    margin-left: 2.5rem;
+}
+
+.lang-text{
+    width: 395px;
+}
+
+.lang-delete{
+    padding-top: 5px;
+}
+
+.lang-text:hover{
+    opacity: 80%;;
+}
+

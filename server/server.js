@@ -204,6 +204,52 @@ app.post('/cv/languagestitle/:id', async(req, res) => {
     }
 })
 
+// get all language items
+app.get('/cv/languages/:cvId', async(req, res) => {
+    const{cvId} = req.params;
+    try{
+        const response = await db.query("SELECT * FROM languages WHERE cv_id = $1 ORDER BY id DESC", [cvId]);
+        res.json(response.rows);
+    }catch(err){
+        console.error(err);
+    }
+})
+
+// add language item
+app.post('/cv/languages/:id', async(req, res) => {
+    const{id} = req.params;
+    try{
+        const langItem = await db.query("INSERT INTO languages(language, cv_id) VALUES ($1, $2)", ["Language", id]);
+        res.json(langItem);
+    }catch(err){
+        console.error(err);
+    }
+})
+
+// edit language item
+app.put('/cv/languages/:id', async(req, res) => {
+    const{id} = req.params;
+    const{ language } = req.body;
+    try{
+        const editLanguage = await db.query('UPDATE languages SET language = $1 WHERE id = $2', 
+        [language, id]);
+        res.json(editLanguage);
+    }catch(err){
+        console.error(err);
+    }
+});
+
+// delete language item
+app.delete('/cv/languages/:id', async(req, res) => {
+    const{id} = req.params;
+    try{
+        const deleteLanguage = await db.query('DELETE FROM languages WHERE id = $1', [id]);
+        res.json(deleteLanguage);
+    }catch(err){
+        console.error(err);
+    }
+});
+
 let lastInsertedCvId = null;
 // add new cv
 app.post('/cvs', async(req, res) => {

@@ -13,7 +13,7 @@ function CVDriversLicenceTitle(){
 
     return(
         <div className="contactInfo-title" onMouseEnter={mouseEnter} onMouseLeave={mouseLeave}>
-            <h3 className="title">Driver`s Licence</h3>
+            <h3 className="title">DRIVING LICENCE</h3>
             {
                 onHover && <h2 className="add-school">+</h2>
             }

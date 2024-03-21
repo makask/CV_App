@@ -18,7 +18,7 @@ CREATE TABLE profiles (
 );
 
 CREATE TABLE cv_profile (
-    id INTEGER REFERENCES cvs(id) UNIQUE,
+    id INTEGER REFERENCES cvs(id) ON DELETE CASCADE,
     profilePicUrl TEXT,
     fullName VARCHAR(255)
 );
@@ -52,7 +52,13 @@ CREATE TABLE cv_languages_title(
   title VARCHAR(255)
 );
 
-CREATE TABLE cv_drivers_licence_title(
+CREATE TABLE languages(
+  id SERIAL PRIMARY KEY,
+  language VARCHAR(255),
+  cv_id INTEGER REFERENCES cvs(id) ON DELETE CASCADE
+)
+
+CREATE TABLE cv_driving_licence_title(
   id INTEGER REFERENCES cvs(id) ON DELETE CASCADE,
   title VARCHAR(255)
 );
