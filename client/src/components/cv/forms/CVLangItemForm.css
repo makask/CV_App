@@ -1,0 +1,12 @@
+.language input[type="text"]{
+    border-radius: 5px;
+    height: 20px;
+    font-size: 16px;
+    width: 350px;
+    margin-top: 0.5rem;
+}
+
+.edit-lang-item{
+    margin-top: 1.9rem;
+}
+
