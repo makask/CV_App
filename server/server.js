@@ -250,6 +250,41 @@ app.delete('/cv/languages/:id', async(req, res) => {
     }
 });
 
+// Add default driving licence title
+app.post('/cv/drivinglicencetitle/:id', async(req, res) => {
+    const{id} = req.params;
+    try{
+        const defLicenceTitle = await db.query("INSERT INTO cv_driving_licence_title(id, title) VALUES ($1, $2)", [id, "DRIVING LICENCE"]);
+        res.json(defLicenceTitle);
+    }catch(err){
+        console.error(err);
+    }
+});
+
+// Get driving licence title
+app.get('/cv/drivinglicencetitle/:id', async(req, res) => {
+    const{id} = req.params;
+    try{    
+        const response = await db.query("SELECT * FROM cv_driving_licence_title WHERE id = $1", [id]);
+        res.json(response.rows);
+    }catch(err){
+        console.error(err);
+    }
+});
+
+// Edit driving licence title
+app.put('/cv/drivinglicencetitle/:id', async(req, res) => {
+    const { id } = req.params;
+    const { title } = req.body;
+    try{
+        const editLicenceTitle = await db.query('UPDATE cv_driving_licence_title SET title = $1 WHERE id = $2',
+        [title,id]);
+        res.json(editLicenceTitle);
+    }catch(err){    
+        console.error(err);
+    }
+});
+
 let lastInsertedCvId = null;
 // add new cv
 app.post('/cvs', async(req, res) => {

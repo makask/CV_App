@@ -41,6 +41,12 @@ function AddCv({ toggleForm, getUserCVs }){
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({ id: id})
             });
+            // Add default cv driving licence title
+            const defaultLicenceTitle = await fetch(`${process.env.REACT_APP_SERVERURL}/cv/drivinglicencetitle/${id}`, {
+                method: "POST",
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ id: id})
+            });
             
             getUserCVs();
         }catch(err){

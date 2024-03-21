@@ -19,6 +19,7 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
     const[languagesTitle, setLanguagesTitle] = useState(null);
     const[institutions, setInstitutions] = useState(null);
     const[languages, setLanguages] = useState(null);
+    const[drivingLicenceTitle, setDrivingLicenceTitle] = useState(null);
     
     async function getContactsData(id){
         try{
@@ -70,12 +71,23 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
         }
     }
 
+    async function getDrivingLicenceTitle(id){
+        try{
+            const response = await fetch(`${process.env.REACT_APP_SERVERURL}/cv/drivinglicencetitle/${id}`);
+            const json = await response.json();
+            setDrivingLicenceTitle(json);
+        }catch(err){
+            console.error(err);
+        }
+    }
+
     useEffect(()=>{
         getContactsData(id);
         getEducationTitle(id);
         getAllInstitutions(id);
         getLanguagesTitle(id);
         getAllLanguages(id);
+        getDrivingLicenceTitle(id);
     },[]);
     
     function handleClick(){
@@ -142,7 +154,14 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
                                         getAllLanguages={getAllLanguages}
                                     />)
                                 }
-                                <CVDriversLicenceTitle />
+                                {
+                                    drivingLicenceTitle?.map(title => <CVDriversLicenceTitle 
+                                        key={title.id} 
+                                        cvId={id} 
+                                        title={drivingLicenceTitle}
+                                        getDrivingLicenceTitle={getDrivingLicenceTitle}
+                                    />)
+                                }
                             </div>
                             <div className="right-panel">
                                 

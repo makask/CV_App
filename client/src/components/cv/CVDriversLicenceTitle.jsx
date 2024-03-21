@@ -1,23 +1,19 @@
 import React, {useState} from "react";
+import './CVEducationTitle.css';
+import CVDriversLicenceForm from "./forms/CVDriversLicenceForm";
 
-function CVDriversLicenceTitle(){
-    const[onHover, setOnHover] = useState(false);
+function CVDriversLicenceTitle({cvId, title, getDrivingLicenceTitle}){
 
-    function mouseEnter(){
-        setOnHover(true);
+    const[wasClicked, setWasClicked] = useState(false);
+
+    function toggleForm(){
+        setWasClicked(!wasClicked);
     }
-
-    function mouseLeave(){
-        setOnHover(false);
-    }
-
+    
     return(
-        <div className="contactInfo-title" onMouseEnter={mouseEnter} onMouseLeave={mouseLeave}>
-            <h3 className="title">DRIVING LICENCE</h3>
-            {
-                onHover && <h2 className="add-school">+</h2>
-            }
-            
+        wasClicked ? <CVDriversLicenceForm toggleForm={toggleForm} cvId={cvId} title={title} getDrivingLicenceTitle={getDrivingLicenceTitle}/> :
+        <div className="contactInfo-title" onClick={toggleForm}>
+            <h3 className="title education-title">{title[0].title}</h3>                        
         </div>
     );
 }
