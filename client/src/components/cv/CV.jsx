@@ -6,6 +6,7 @@ import CVLanguagesTitle from "./CVLanguagesTitle";
 import CVDriversLicenceTitle from "./CVDriversLicenceTitle";
 import CVEducationItem from "./CVEducationItem";
 import CVLanguageItem from "./CVLanguageItem";
+import CVDrivingLicence from "./CVDrivingLicence";
 import './CV.css';
 
 
@@ -20,6 +21,7 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
     const[institutions, setInstitutions] = useState(null);
     const[languages, setLanguages] = useState(null);
     const[drivingLicenceTitle, setDrivingLicenceTitle] = useState(null);
+    const[drivingLicence, setDrivingLicence] = useState(null);
     
     async function getContactsData(id){
         try{
@@ -81,6 +83,16 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
         }
     }
 
+    async function getDrivingLicence(id){
+        try{
+            const response = await fetch(`${process.env.REACT_APP_SERVERURL}/cv/drivinglicence/${id}`);
+            const json = await response.json();
+            setDrivingLicence(json);
+        }catch(err){
+            console.error(err);
+        }
+    }
+
     useEffect(()=>{
         getContactsData(id);
         getEducationTitle(id);
@@ -88,6 +100,7 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
         getLanguagesTitle(id);
         getAllLanguages(id);
         getDrivingLicenceTitle(id);
+        getDrivingLicence(id);
     },[]);
     
     function handleClick(){
@@ -162,9 +175,22 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
                                         getDrivingLicenceTitle={getDrivingLicenceTitle}
                                     />)
                                 }
+                                {
+                                    drivingLicence?.map(licence => <CVDrivingLicence 
+                                        key={licence.id}
+                                        cvId={id}
+                                        licence={drivingLicence}
+                                        getDrivingLicence={getDrivingLicence}
+                                    />)
+                                }
                             </div>
                             <div className="right-panel">
-                                
+                                <div className="about">
+                                    <h2 class="title2">ABOUT ME</h2>
+                                    <p>
+                                        Say something about yourself...
+                                    </p>
+                                </div>
                             </div>
                     </div>
                 </div>

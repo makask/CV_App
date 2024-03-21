@@ -285,6 +285,41 @@ app.put('/cv/drivinglicencetitle/:id', async(req, res) => {
     }
 });
 
+// Add default driving licence
+app.post('/cv/drivinglicence/:id', async(req, res) => {
+    const{id} = req.params;
+    try{
+        const defLicence = await db.query("INSERT INTO cv_driving_licences(id, licences) VALUES ($1, $2)", [id, "None"]);
+        res.json(defLicence);
+    }catch(err){
+        console.error(err);
+    }
+});
+
+// Get driving licence
+app.get('/cv/drivinglicence/:id', async(req, res) => {
+    const{id} = req.params;
+    try{    
+        const response = await db.query("SELECT * FROM cv_driving_licences WHERE id = $1", [id]);
+        res.json(response.rows);
+    }catch(err){
+        console.error(err);
+    }
+});
+
+// Edit driving licence
+app.put('/cv/drivinglicence/:id', async(req, res) => {
+    const { id } = req.params;
+    const { licences } = req.body;
+    try{
+        const editLicences = await db.query('UPDATE cv_driving_licences SET licences = $1 WHERE id = $2',
+        [licences,id]);
+        res.json(editLicences);
+    }catch(err){    
+        console.error(err);
+    }
+});
+
 let lastInsertedCvId = null;
 // add new cv
 app.post('/cvs', async(req, res) => {

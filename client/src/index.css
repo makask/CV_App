@@ -523,6 +523,20 @@ input::placeholder {
     font-weight: 300;
 }
 
+.cv-container .right-panel {
+    position: relative;
+    background: #fff;
+    padding: 30px;
+}
+
+.about {
+    margin-bottom: 40px;
+}
+
+.about:last-child {
+    margin-bottom: 0;
+}
+
 
 
 

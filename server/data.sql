@@ -63,6 +63,11 @@ CREATE TABLE cv_driving_licence_title(
   title VARCHAR(255)
 );
 
+CREATE TABLE cv_driving_licences(
+  id INTEGER REFERENCES cvs(id) ON DELETE CASCADE,
+  licences VARCHAR(255)
+);
+
 CREATE TABLE work_experience_title(
   id INTEGER REFERENCES cvs(id) ON DELETE CASCADE,
   title VARCHAR(255)
