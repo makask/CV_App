@@ -1,16 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useCookies } from "react-cookie";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { app } from "../../firebase";
+
 
 function UserProfile({ profileData, getProfileData }){
 
+    const fileRef = useRef(null);
     const [cookies] = useCookies(null);
     const userEmail = cookies.Email;
+
     const [imageUrl, setImageUrl] = useState(profileData[0].profilepicurl);
-    
     const[profile, setProfile] = useState({
         fName: profileData[0].first_name,
         lName: profileData[0].last_name
     });
+
+    const[file, setFile] = useState(undefined);
+    const[filePerc, setFilePerc] = useState(0);
+    const[fileUploadError, setFileUploadError] = useState(false);
 
     function handleChange(event){
         const { name, value } = event.target;
@@ -28,34 +36,52 @@ function UserProfile({ profileData, getProfileData }){
         setImageUrl(event.target.value);
     }
 
-    async function fileSelectedHandler(event){
-        let result = "";
-        const file = event.target.files[0]
-        const reader = new FileReader();
-        reader.addEventListener( "load", async () => {
-            // convert image file to base64 string
-            result = reader.result;
-            const response = await fetch(`${process.env.REACT_APP_SERVERURL}/uploadImage`,{
-                method: 'POST',
-                headers: { 'Content-Type' : 'application/json' },
-                body: JSON.stringify({ result })
-              });             
-              const url = await response.json();
-              const updatedUrl = url.url;
-              document.querySelector("#picUrl").value =  updatedUrl;
-              document.querySelector("#profile-img").src = updatedUrl;
-              setImageUrl(updatedUrl);
-        },
-        false,
-        );
-        
-        if (file) {
-            reader.readAsDataURL(file);
-        }  
-        return result;
+    async function handleFileUpload(file){
+        const storage = getStorage(app);
+        const fileName = new Date().getTime() + file.name;
+        const storageRef = ref(storage, fileName);
+        const uploadTask = uploadBytesResumable(storageRef, file);
+
+        uploadTask.on('state_changed',
+            (snapshot) => {
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                setFilePerc(Math.round(progress));
+            },
+            (error) => {
+                setFileUploadError(true);
+            },
+            () => {
+               getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                  updateDbPicUrl(userEmail, downloadURL);
+                  setImageUrl(downloadURL);
+               })
+            });
     }
+
+    async function updateDbPicUrl(email, url){
+        try{
+            const response = await fetch(`${process.env.REACT_APP_SERVERURL}/profilepic/${email}`,{
+                method: "PUT",
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    profilepicurl: url
+                })
+            })
+            getProfileData(userEmail);
+        }catch(err){
+            console.error(err);
+        }
+    }
+
+    useEffect(()=>{
+        if(file){
+            handleFileUpload(file);
+        }
+    },[file]);
+
     
     async function editData(event){
+        event.preventDefault();
         try{
             const response = await fetch(`${process.env.REACT_APP_SERVERURL}/profile/${userEmail}`, {
                 method: "PUT",
@@ -77,15 +103,11 @@ function UserProfile({ profileData, getProfileData }){
     return (
         <div className="profile-container">
             <div>
-                <img id="profile-img" src={ profileData[0].profilepicurl } /> 
+                <img id="profile-img" onClick={()=>fileRef.current.click()} src={ profileData[0].profilepicurl } /> 
             </div>
             <form> 
                 <div className="pr-img">
-                    <p>Image: </p>
-                    {
-
-                    }
-                    <input type="file" onChange={fileSelectedHandler} />
+                    <input type="file" onChange={(e)=>setFile(e.target.files[0])} ref={fileRef} hidden accept='image/*'/>
                 </div> 
                 <div className="pr-url">
                     <p>Image URL: </p>

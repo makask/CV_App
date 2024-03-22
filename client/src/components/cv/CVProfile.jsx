@@ -1,29 +1,66 @@
-import React, { useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { app } from "../../firebase";
 
-function CVProfile({profileData}){
+function CVProfile({cvProfileData, cvId, getCVProfileData}){
 
     const [cookies] = useCookies(null);
-    const userEmail = cookies.Email;
+    const fileRef = useRef(null);
 
-    const [imgUrl, setImageUrl] = useState(profileData[0].profilepicurl);
-    const [fullName, setFullName] = useState(profileData[0].first_name + " " + profileData[0].last_name);
+    const[file, setFile] = useState(undefined);
+    const[filePerc, setFilePerc] = useState(0);
+    const[fileUploadError, setFileUploadError] = useState(false);
+    
+    function handleFileUpload(file){
+        const storage = getStorage(app);
+        const fileName = new Date().getTime() + file.name;
+        const storageRef = ref(storage, fileName);
+        const uploadTask = uploadBytesResumable(storageRef, file);
 
-    function handleClick(){
-        document.querySelector("#openImgUpload").click();
+        uploadTask.on('state_changed',
+            (snapshot) => {
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                setFilePerc(Math.round(progress));
+            },
+            (error) => {
+                setFileUploadError(true);
+            },
+            () => {
+               getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                    updateDbPicUrl(cvId,downloadURL); 
+               })
+            });
     }
 
-    function changeName(){
-        
+    async function updateDbPicUrl(id, url){
+        try{
+            const response = await fetch(`${process.env.REACT_APP_SERVERURL}/cv/cvprofilepic/${id}`,{
+                method: "PUT",
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    picurl: url
+                })
+            })
+            getCVProfileData(cvId);
+        }catch(err){
+            console.error(err);
+        }
     }
+
+    useEffect(()=>{
+     if(file){
+        handleFileUpload(file);
+     }   
+    },[file]);
     
     return(
         <div className="cv-profile">
             <div className="imgBox">
-                <img src={imgUrl} alt="profile-picture" onClick={handleClick}/>
-                <input id="openImgUpload" type="file" style={{display:"none"}}/>
+                <img src={cvProfileData[0].picurl} alt="profile-picture" onClick={()=>fileRef.current.click()} />
+                <input onChange={(e)=>setFile(e.target.files[0])} ref={fileRef} type="file" hidden accept="image/*"/>
             </div>
-            <h2 onClick={changeName}>{fullName}</h2> 
+            <h2>{cvProfileData[0].fullname}</h2> 
         </div>
     );
 }

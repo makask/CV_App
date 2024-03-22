@@ -19,9 +19,9 @@ CREATE TABLE profiles (
 
 CREATE TABLE cv_profile (
     id INTEGER REFERENCES cvs(id) ON DELETE CASCADE,
-    profilePicUrl TEXT,
+    picUrl TEXT,
     fullName VARCHAR(255)
-);
+)
 
 CREATE TABLE cv_contact (
   id INTEGER REFERENCES cvs(id) ON DELETE CASCADE,

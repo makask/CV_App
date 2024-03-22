@@ -51,6 +51,53 @@ app.put("/profile/:email", async(req, res) => {
     }
 });
 
+// edit user profile picture
+app.put('/profilepic/:email', async(req, res) => {
+    const {email} = req.params;
+    const {profilepicurl} = req.body;
+    try{
+        const editProfilePicUrl = await db.query('UPDATE profiles SET profilepicurl = $1 WHERE email = $2', [profilepicurl, email]);
+        res.json(editProfilePicUrl);
+    }catch(err){
+        console.error(err);
+    }
+})
+
+// add new default cv profile
+app.post('/cv/cvprofile/:id', async(req, res) => {
+    const {id} = req.params;
+    try{
+        const defaultCVProfile = await db.query("INSERT INTO cv_profile(id, picurl, fullname) VALUES ($1, $2, $3)", 
+        [id, "https://img.freepik.com/premium-vector/user-profile-icon-flat-style-member-avatar-vector-illustration-isolated-background-human-permission-sign-business-concept_157943-15752.jpg", "FULL NAME"]); 
+        res.json(defaultCVProfile);
+    }catch(err){
+        console.error(err);
+    }
+});
+
+// update cv profile image url to uploaded image url
+app.put('/cv/cvprofilepic/:id', async(req, res) => {
+    const{id} = req.params;
+    const{picurl} = req.body;
+    try{
+        const uploadedCVProfilePic = await db.query("UPDATE cv_profile SET picurl = $1 WHERE id = $2", [picurl, id]);
+        res.json(uploadedCVProfilePic); 
+    }catch(err){
+        console.error(err);
+    }
+})
+
+// get cv profile
+app.get('/cv/cvprofile/:id', async(req, res) => {
+    const{id} = req.params;
+    try{
+        const cvProfile = await db.query("SELECT * FROM cv_profile WHERE id = $1", [id]);
+        res.json(cvProfile.rows);
+    }catch(err){
+        console.error(err);
+    }
+});
+
 // get cv contacts
 app.get('/cv/contact/:id', async(req, res) => {
     const { id } = req.params;
@@ -362,6 +409,7 @@ app.post('/profile/:userEmail', async(req, res) => {
         res.json(err.detail);
     }
 });
+
 
 // Sign up
 app.post('/signup', async(req, res) => {

@@ -37,6 +37,7 @@ function Main({ userEmail, authToken,cvId, setIsCV, setCVid, profileData, getPro
                         setCVid={setCVid} 
                         profileData={profileData} 
                         setProfileData={setProfileData}
+                        getProfileData={getProfileData}
                         getUserCVs={getUserCVs}
                     />             
                 </div>

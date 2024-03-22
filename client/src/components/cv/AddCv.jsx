@@ -22,6 +22,13 @@ function AddCv({ toggleForm, getUserCVs }){
             });
             const data = await fetch(`${process.env.REACT_APP_SERVERURL}/getCvId`).then(res => res.json());
             const id = data.id;
+
+            //Add default cv profile
+            const profileResponse = await fetch(`${process.env.REACT_APP_SERVERURL}/cv/cvprofile/${id}`, {
+                method: "POST",
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ id: id })
+            });
             
             // Add default cv contacts
             const contactResponse = await fetch(`${process.env.REACT_APP_SERVERURL}/cv/contact/${id}`, {

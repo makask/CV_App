@@ -15,6 +15,7 @@ import { useReactToPrint } from 'react-to-print';
 
 function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id }){
 
+    const[cvProfileData, setCvProfileData] = useState(null);
     const[contactData, setContactData] = useState(null);
     const[educationTitle, setEducationTitle] = useState(null);
     const[languagesTitle, setLanguagesTitle] = useState(null);
@@ -22,6 +23,16 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
     const[languages, setLanguages] = useState(null);
     const[drivingLicenceTitle, setDrivingLicenceTitle] = useState(null);
     const[drivingLicence, setDrivingLicence] = useState(null);
+
+    async function getCVProfileData(id){
+        try{
+            const response = await fetch(`${process.env.REACT_APP_SERVERURL}/cv/cvprofile/${id}`);
+            const json = await response.json();
+            setCvProfileData(json);
+        }catch(err){
+            console.error(err);
+        }
+    }
     
     async function getContactsData(id){
         try{
@@ -94,6 +105,7 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
     }
 
     useEffect(()=>{
+        getCVProfileData(id);
         getContactsData(id);
         getEducationTitle(id);
         getAllInstitutions(id);
@@ -120,7 +132,14 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
                     <div className="cv-print-area" ref={componentRef}>
                         <div className="cv-container">
                             <div className="left-panel">
-                                <CVProfile profileData={profileData} getProfileData={getProfileData} setProfileData={setProfileData}/>
+                                {
+                                    cvProfileData?.map(data => <CVProfile 
+                                        key={id}
+                                        cvId={id}
+                                        cvProfileData={cvProfileData}
+                                        getCVProfileData={getCVProfileData}
+                                    />)
+                                }
                                 { 
                                     contactData?.map(item => <CVContact 
                                     key={"0"} id={item.id} 
@@ -185,13 +204,98 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
                                 }
                             </div>
                             <div className="right-panel">
+                                    <div>
+                                        <h2 className="title2">ABOUT ME</h2>
+                                    </div>
+                                    <div className="about">
+                                        <p className="paragraph">
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In fringilla risus eget purus consectetur, 
+                                            in tristique dolor bibendum. Ut sit amet purus ut ipsum eleifend tempus non non libero. Nulla facilisi. 
+                                            Integer imperdiet odio a nibh convallis mollis. Morbi eget dolor non ex efficitur dapibus sed non lorem. 
+                                            Vivamus mollis pretium sapien. Phasellus auctor, metus in aliquet lacinia, ligula metus placerat arcu, 
+                                            ultrices porttitor nunc ipsum sed augue. Nulla vitae turpis sed arcu dapibus fermentum. Fusce lacinia nec 
+                                            ipsum in egestas. Ut eget metus sit amet turpis dictum sollicitudin vel vitae elit. Integer enim nunc, 
+                                            varius at velit eu, malesuada fringilla dolor. Proin massa dolor, aliquet nec justo ac, pulvinar feugiat 
+                                            orci. Cras venenatis, nisi non vehicula volutpat, ipsum sem dignissim dolor, quis maximus purus ante vitae enim.
+                                            Say something about yourself...
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <h2 className="title2">WORK EXPERIENCE</h2>
+                                    </div>
+
                                 <div className="about">
-                                    <h2 class="title2">ABOUT ME</h2>
-                                    <p>
-                                        Say something about yourself...
-                                    </p>
+                                    <div className="box">
+                                        <div className="year_company">
+                                            <h5>2021.09-2021.10 </h5>
+                                            <h5>Veebipoed.ee</h5>
+                                        </div>
+                                        <div className="text">
+                                            <h4>SOFTWARE DEVELOPMENT INTERN</h4>
+                                            <p>I stopped the internship due to lack of a mentorship.</p>
+                                        </div>
+                                    </div>
+                                
+                            
+                                        <div className="box">
+                                            <div class="year_company">
+                                                <h5>2017 - Present</h5>
+                                                <h5>Tallinn University of Technology</h5>
+                                            </div>
+                                        <div className="text">
+                                        <h4>TOEFL/GRE test administrator</h4>
+                                            <p>Managed day-to-day operations of a TOEFL/GRE testing center. Establishing and enforcing test center policies and procedures, ensuring compliance with all applicable regulations and standards.</p>
+                                        </div>
+                                    </div>
+                            
+                                
+
+                                    <div className="box">
+                                            <div className="year_company">
+                                                <h5>2017 - Present</h5>
+                                                <h5>Tallinn University of Technology</h5>
+                                            </div>
+                                        <div className="text">
+                                        <h4>TOEFL/GRE test administrator</h4>
+                                            <p>Managed day-to-day operations of a TOEFL/GRE testing center. Establishing and enforcing test center policies and procedures, ensuring compliance with all applicable regulations and standards.</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="box">
+                                            <div className="year_company">
+                                                <h5>2017 - Present</h5>
+                                                <h5>Tallinn University of Technology</h5>
+                                            </div>
+                                        <div className="text">
+                                        <h4>TOEFL/GRE test administrator</h4>
+                                            <p>Managed day-to-day operations of a TOEFL/GRE testing center. Establishing and enforcing test center policies and procedures, ensuring compliance with all applicable regulations and standards.</p>
+                                        </div>
+                                    </div>
+
                                 </div>
-                            </div>
+
+                                <div className="about skills">
+                                    <h2 className="title2">SKILLS</h2>
+                                    <br/>
+                                        <div style={{display:"flex", marginTop:"1rem", gap:"3px"}}>
+                                            <h4 style={{color:"#848c90"}}>Java, </h4>
+                                            <h4 style={{color:"#848c90"}}>C#, </h4>
+                                            <h4 style={{color:"#848c90"}}>PHP,</h4>
+                                            <h4 style={{color:"#848c90"}}>HTML,</h4>
+                                            
+                                        </div>
+                                    </div>    
+                                <div className="about interests">
+                                    <h2 className="title2">Interests</h2>
+                                    <ul>
+                                            <li>Fitness</li>
+                                            <li>Movies</li>
+                                            <li>Music</li>
+                                            <li>Programming</li>
+                                    </ul>
+                                </div>                               
+                                </div>
+
                     </div>
                 </div>
                 <button className="btn-cv-print" onClick={handlePrint}>Download as PDF</button>
