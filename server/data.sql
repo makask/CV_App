@@ -73,6 +73,11 @@ CREATE TABLE cv_about_me_title(
   title VARCHAR(255)
 )
 
+CREATE TABLE cv_about_me(
+  id INTEGER REFERENCES cvs(id) ON DELETE CASCADE,
+  about_text TEXT
+)
+
 CREATE TABLE work_experience_title(
   id INTEGER REFERENCES cvs(id) ON DELETE CASCADE,
   title VARCHAR(255)

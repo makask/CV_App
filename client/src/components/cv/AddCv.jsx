@@ -67,6 +67,11 @@ function AddCv({ toggleForm, getUserCVs }){
                 method: "POST",
                 headers: {'Content-Type': 'application/json'} 
             });
+            //Add default about me text
+            const aboutMeText = await fetch(`${process.env.REACT_APP_SERVERURL}/cv/aboutme/${id}`, {
+                method: "POST",
+                headers: {'Content-Type': 'application/json'} 
+            });
             
             getUserCVs();
         }catch(err){

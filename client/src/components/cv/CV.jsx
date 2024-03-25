@@ -8,7 +8,8 @@ import CVEducationItem from "./CVEducationItem";
 import CVLanguageItem from "./CVLanguageItem";
 import CVDrivingLicence from "./CVDrivingLicence";
 import CVAboutMeTitle from "./CVAboutMeTitle";
-import CVAboutMeTitleForm from "./forms/CVAboutMeTitleForm";
+import CVAboutMe from "./CVAboutMe";
+import CVAboutMeForm from "./forms/CVAboutMeForm";
 import './CV.css';
 
 
@@ -26,6 +27,7 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
     const[drivingLicenceTitle, setDrivingLicenceTitle] = useState(null);
     const[drivingLicence, setDrivingLicence] = useState(null);
     const[aboutMeTitle, setAboutMeTitle] = useState(null);
+    const[aboutMe, setAboutMe] = useState(null);
 
     async function getCVProfileData(id){
         try{
@@ -117,6 +119,16 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
         }
     }
 
+    async function getAboutMe(id){
+        try{
+            const response = await fetch(`${process.env.REACT_APP_SERVERURL}/cv/aboutme/${id}`);
+            const json = await response.json();
+            setAboutMe(json);
+        }catch(err){
+            console.error(err);
+        }
+    }
+
     useEffect(()=>{
         getCVProfileData(id);
         getContactsData(id);
@@ -127,6 +139,7 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
         getDrivingLicenceTitle(id);
         getDrivingLicence(id);
         getAboutMeTitle(id);
+        getAboutMe(id);
     },[]);
     
     function handleClick(){
@@ -226,19 +239,14 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
                                             getAboutMeTitle={getAboutMeTitle}
                                         />)
                                     }
-                                    <div className="about">
-                                        <p className="paragraph">
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In fringilla risus eget purus consectetur, 
-                                            in tristique dolor bibendum. Ut sit amet purus ut ipsum eleifend tempus non non libero. Nulla facilisi. 
-                                            Integer imperdiet odio a nibh convallis mollis. Morbi eget dolor non ex efficitur dapibus sed non lorem. 
-                                            Vivamus mollis pretium sapien. Phasellus auctor, metus in aliquet lacinia, ligula metus placerat arcu, 
-                                            ultrices porttitor nunc ipsum sed augue. Nulla vitae turpis sed arcu dapibus fermentum. Fusce lacinia nec 
-                                            ipsum in egestas. Ut eget metus sit amet turpis dictum sollicitudin vel vitae elit. Integer enim nunc, 
-                                            varius at velit eu, malesuada fringilla dolor. Proin massa dolor, aliquet nec justo ac, pulvinar feugiat 
-                                            orci. Cras venenatis, nisi non vehicula volutpat, ipsum sem dignissim dolor, quis maximus purus ante vitae enim.
-                                            Say something about yourself...
-                                        </p>
-                                    </div>
+                                    {
+                                        aboutMe?.map(about => <CVAboutMe 
+                                            key={about.id}
+                                            cvId={id}
+                                            aboutMe={aboutMe}
+                                            getAboutMe={getAboutMe}
+                                       />)
+                                    }
                                     <div>
                                         <h2 className="title2">WORK EXPERIENCE</h2>
                                     </div>

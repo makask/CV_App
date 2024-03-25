@@ -53,10 +53,3 @@ function CVEducationItem({ id,cvId, getAllInstitutions, years, speciality, schoo
 
 export default CVEducationItem;
 
-/* 
-    
-           <h5>2021 - Present</h5>
-           <h4>Software development</h4>
-           <h4>Tallinn Polytechnic School</h4>   
-
-*/

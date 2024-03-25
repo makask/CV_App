@@ -412,6 +412,40 @@ app.put('/cv/aboutmetitle/:id', async(req, res) =>{
     }
 });
 
+// Add default about me
+app.post('/cv/aboutme/:id', async(req, res) => {
+    const{id} = req.params;
+    try{
+        const defAboutMe = await db.query("INSERT INTO cv_about_me(id, about_text) VALUES ($1, $2)", [id, "Write something about yourself..."]);
+        res.json(defAboutMe);
+    }catch(err){
+        console.error(err);
+    }
+})
+
+// Get about me text
+app.get('/cv/aboutme/:id', async(req, res) => {
+    const{id} = req.params;
+    try{
+        const response = await db.query("SELECT * FROM cv_about_me WHERE id = $1", [id]);
+        res.json(response.rows);
+    }catch(err){
+        console.error(err);
+    }
+});
+
+// Edit about me text
+app.put('/cv/aboutme/:id', async(req, res) =>{
+    const{id} = req.params;
+    const{about_text} = req.body;
+    try{
+        const response = await db.query("UPDATE cv_about_me SET about_text = $1 WHERE id = $2", [about_text, id]);
+        res.json(response);
+    }catch(err){
+        console.error(err);
+    }
+});
+
 let lastInsertedCvId = null;
 // add new cv
 app.post('/cvs', async(req, res) => {
