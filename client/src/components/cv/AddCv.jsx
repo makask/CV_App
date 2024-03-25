@@ -61,6 +61,12 @@ function AddCv({ toggleForm, getUserCVs }){
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({ id: id})
             });
+
+            //Add default cv about me title
+            const defaultAboutMeTitle = await fetch(`${process.env.REACT_APP_SERVERURL}/cv/aboutmetitle/${id}`, {
+                method: "POST",
+                headers: {'Content-Type': 'application/json'} 
+            });
             
             getUserCVs();
         }catch(err){

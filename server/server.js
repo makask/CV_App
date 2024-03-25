@@ -379,6 +379,39 @@ app.put('/cv/drivinglicence/:id', async(req, res) => {
     }
 });
 
+// Add default about me title
+app.post('/cv/aboutmetitle/:id', async(req, res) => {
+    const{id} = req.params;
+    try{
+        const defAboutMeTitle = await db.query("INSERT INTO cv_about_me_title(id, title) VALUES ($1, $2)", [id, "ABOUT ME"]);
+        res.json(defAboutMeTitle);
+    }catch(err){
+        console.error(err);
+    }
+})
+
+// Get about me title
+app.get('/cv/aboutmetitle/:id', async(req, res) => {
+    const{id} = req.params;
+    try{
+        const response = await db.query("SELECT * FROM cv_about_me_title WHERE id = $1", [id]);
+        res.json(response.rows);
+    }catch(err){
+        console.error(err);
+    }
+});
+// Edit about me title
+app.put('/cv/aboutmetitle/:id', async(req, res) =>{
+    const{id} = req.params;
+    const{title} = req.body;
+    try{
+        const response = await db.query("UPDATE cv_about_me_title SET title = $1 WHERE id = $2", [title, id]);
+        res.json(response);
+    }catch(err){
+        console.error(err);
+    }
+});
+
 let lastInsertedCvId = null;
 // add new cv
 app.post('/cvs', async(req, res) => {

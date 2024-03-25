@@ -1,0 +1,18 @@
+.about-me-title{
+    display: flex;
+    align-items: center;
+}
+
+.about-me-title h2{
+    padding-bottom: 10px;
+}
+
+.about-me-title h2:hover{
+    opacity: 80%;
+}
+
+.about-me-title:hover{
+    border: 1px solid #003147;
+    border-radius: 5px;
+    cursor: pointer;
+}

@@ -7,6 +7,8 @@ import CVDriversLicenceTitle from "./CVDriversLicenceTitle";
 import CVEducationItem from "./CVEducationItem";
 import CVLanguageItem from "./CVLanguageItem";
 import CVDrivingLicence from "./CVDrivingLicence";
+import CVAboutMeTitle from "./CVAboutMeTitle";
+import CVAboutMeTitleForm from "./forms/CVAboutMeTitleForm";
 import './CV.css';
 
 
@@ -23,6 +25,7 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
     const[languages, setLanguages] = useState(null);
     const[drivingLicenceTitle, setDrivingLicenceTitle] = useState(null);
     const[drivingLicence, setDrivingLicence] = useState(null);
+    const[aboutMeTitle, setAboutMeTitle] = useState(null);
 
     async function getCVProfileData(id){
         try{
@@ -104,6 +107,16 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
         }
     }
 
+    async function getAboutMeTitle(id){
+        try{
+            const response = await fetch(`${process.env.REACT_APP_SERVERURL}/cv/aboutmetitle/${id}`);
+            const json = await response.json();
+            setAboutMeTitle(json);
+        }catch(err){
+            console.error(err);
+        }
+    }
+
     useEffect(()=>{
         getCVProfileData(id);
         getContactsData(id);
@@ -113,6 +126,7 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
         getAllLanguages(id);
         getDrivingLicenceTitle(id);
         getDrivingLicence(id);
+        getAboutMeTitle(id);
     },[]);
     
     function handleClick(){
@@ -204,9 +218,14 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
                                 }
                             </div>
                             <div className="right-panel">
-                                    <div>
-                                        <h2 className="title2">ABOUT ME</h2>
-                                    </div>
+                                    {
+                                        aboutMeTitle?.map(title => <CVAboutMeTitle 
+                                            key={title.id}
+                                            cvId={id}
+                                            aboutMeTitle={aboutMeTitle}
+                                            getAboutMeTitle={getAboutMeTitle}
+                                        />)
+                                    }
                                     <div className="about">
                                         <p className="paragraph">
                                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. In fringilla risus eget purus consectetur, 
@@ -259,7 +278,6 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
                                     </ul>
                                 </div>                               
                                 </div>
-
                     </div>
                 </div>
                 <button className="btn-cv-print" onClick={handlePrint}>Download as PDF</button>
