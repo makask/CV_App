@@ -36,7 +36,7 @@ function CVLangItemForm({id, cvId, getAllLanguages, toggleForm, language}){
     return(
         <div className="contactInfo languages">
         <div className="language language-item-form ">
-            <p className="text lang-text"><input type="text" name="language" value={lang.language} onChange={handleChange}></input></p> 
+            <p className="text lang-text"><input type="text" name="language" value={lang.language} onChange={handleChange} required></input></p> 
             <span className="contactInfo-save-form"><i onClick={editLangItem}  className="fa fa-check-circle-o fa-lg edit-lang-item" aria-hidden="true"></i></span>
             <h2 className="education-cancel-edit" onClick={toggleForm}>x</h2>  
         </div>

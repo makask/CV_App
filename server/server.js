@@ -87,6 +87,18 @@ app.put('/cv/cvprofilepic/:id', async(req, res) => {
     }
 })
 
+// update cv profile fullname
+app.put('/cv/cvfullname/:id', async(req, res) => {
+    const{id} = req.params;
+    const{fullname} = req.body;
+    try{
+        const editFullName = await db.query("UPDATE cv_profile SET fullname = $1 WHERE id = $2", [fullname, id]);
+        res.json(editFullName);
+    }catch(err){
+        console.error(err);
+    }
+});
+
 // get cv profile
 app.get('/cv/cvprofile/:id', async(req, res) => {
     const{id} = req.params;

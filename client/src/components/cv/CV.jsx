@@ -228,50 +228,14 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
                                     <div className="box">
                                         <div className="year_company">
                                             <h5>2021.09-2021.10 </h5>
-                                            <h5>Veebipoed.ee</h5>
+                                            <h5>Sample Company</h5>
                                         </div>
                                         <div className="text">
                                             <h4>SOFTWARE DEVELOPMENT INTERN</h4>
-                                            <p>I stopped the internship due to lack of a mentorship.</p>
+                                            <p>Sample Job description.</p>
                                         </div>
                                     </div>
                                 
-                            
-                                        <div className="box">
-                                            <div class="year_company">
-                                                <h5>2017 - Present</h5>
-                                                <h5>Tallinn University of Technology</h5>
-                                            </div>
-                                        <div className="text">
-                                        <h4>TOEFL/GRE test administrator</h4>
-                                            <p>Managed day-to-day operations of a TOEFL/GRE testing center. Establishing and enforcing test center policies and procedures, ensuring compliance with all applicable regulations and standards.</p>
-                                        </div>
-                                    </div>
-                            
-                                
-
-                                    <div className="box">
-                                            <div className="year_company">
-                                                <h5>2017 - Present</h5>
-                                                <h5>Tallinn University of Technology</h5>
-                                            </div>
-                                        <div className="text">
-                                        <h4>TOEFL/GRE test administrator</h4>
-                                            <p>Managed day-to-day operations of a TOEFL/GRE testing center. Establishing and enforcing test center policies and procedures, ensuring compliance with all applicable regulations and standards.</p>
-                                        </div>
-                                    </div>
-
-                                    <div className="box">
-                                            <div className="year_company">
-                                                <h5>2017 - Present</h5>
-                                                <h5>Tallinn University of Technology</h5>
-                                            </div>
-                                        <div className="text">
-                                        <h4>TOEFL/GRE test administrator</h4>
-                                            <p>Managed day-to-day operations of a TOEFL/GRE testing center. Establishing and enforcing test center policies and procedures, ensuring compliance with all applicable regulations and standards.</p>
-                                        </div>
-                                    </div>
-
                                 </div>
 
                                 <div className="about skills">

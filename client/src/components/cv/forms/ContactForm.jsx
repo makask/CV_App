@@ -45,7 +45,6 @@ function ContactForm({ id, toggleForm, contactData, getContactsData }){
         }catch(err){
             console.error(err);
         }
-        
     }
 
     return(

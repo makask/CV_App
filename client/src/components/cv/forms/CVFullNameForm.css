@@ -1,0 +1,50 @@
+.fullName{
+    display: flex;
+    border-radius: 10px;
+    height: 50px;
+    align-items: center;
+    margin-top: 10px;
+
+}
+
+.fullName:hover{
+    border: 1px solid rgb(184, 178, 178);
+    cursor: pointer;
+    opacity: 90%;
+}
+
+.fullName-name{
+    width: 350px;
+}
+
+.fullName-name input[type="text"]{
+    text-align: center;
+    border-radius: 10px;
+}
+
+.fullName-name h2{
+    margin-left: 90px;
+}
+
+.fullName-buttons{
+    display: flex;
+    align-items: center;
+    width: 100px;
+}
+
+.fullName-buttons i{
+    margin-left: 30px;
+    color: #fff;
+}
+
+.fullName-buttons i:hover, .fullName-buttons p:hover{
+    opacity: 80%;
+    cursor: pointer;
+}
+
+.fullName-buttons p{
+    margin-left: 20px;
+    color: #fff;
+    font-weight: 700;
+}
+
