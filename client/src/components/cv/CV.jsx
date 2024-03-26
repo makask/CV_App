@@ -9,7 +9,9 @@ import CVLanguageItem from "./CVLanguageItem";
 import CVDrivingLicence from "./CVDrivingLicence";
 import CVAboutMeTitle from "./CVAboutMeTitle";
 import CVAboutMe from "./CVAboutMe";
-import CVAboutMeForm from "./forms/CVAboutMeForm";
+import CVWorkExperienceTitle from "./CVWorkExperienceTitle";
+import CVSkillsTitle from "./CVSkillsTitle";
+import CVHobbiesTitle from "./CVHobbiesTitle";
 import './CV.css';
 
 
@@ -28,6 +30,9 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
     const[drivingLicence, setDrivingLicence] = useState(null);
     const[aboutMeTitle, setAboutMeTitle] = useState(null);
     const[aboutMe, setAboutMe] = useState(null);
+    const[workExperienceTitle, setWorkExperienceTitle] = useState(null);
+    const[skillsTitle, setSkillsTitle] = useState(null);
+    const[hobbiesTitle, setHobbiesTitle] = useState(null);
 
     async function getCVProfileData(id){
         try{
@@ -129,6 +134,36 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
         }
     }
 
+    async function getWorkExperienceTitle(id){
+        try{
+            const response = await fetch(`${process.env.REACT_APP_SERVERURL}/cv/workexperiencetitle/${id}`);
+            const json = await response.json();
+            setWorkExperienceTitle(json);
+        }catch(err){
+            console.error(err);
+        }
+    }
+
+    async function getSkillsTitle(id){
+        try{
+            const response = await fetch(`${process.env.REACT_APP_SERVERURL}/cv/skillstitle/${id}`);
+            const json = await response.json();
+            setSkillsTitle(json);
+        }catch(err){
+            console.error(err);
+        }
+    }
+
+    async function getHobbiesTitle(id){
+        try{
+            const response = await fetch(`${process.env.REACT_APP_SERVERURL}/cv/hobbiestitle/${id}`);
+            const json = await response.json();
+            setHobbiesTitle(json);
+        }catch(err){
+            console.error(err);
+        }
+    }
+
     useEffect(()=>{
         getCVProfileData(id);
         getContactsData(id);
@@ -140,6 +175,9 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
         getDrivingLicence(id);
         getAboutMeTitle(id);
         getAboutMe(id);
+        getWorkExperienceTitle(id);
+        getSkillsTitle(id);
+        getHobbiesTitle(id);
     },[]);
     
     function handleClick(){
@@ -247,14 +285,20 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
                                             getAboutMe={getAboutMe}
                                        />)
                                     }
-                                    <div>
-                                        <h2 className="title2">WORK EXPERIENCE</h2>
-                                    </div>
+                                    {
+                                        workExperienceTitle?.map(title => <CVWorkExperienceTitle 
+                                            key={title.id}
+                                            cvId={id}
+                                            workExperienceTitle={workExperienceTitle}
+                                            getWorkExperienceTitle={getWorkExperienceTitle}
+                                        />)
+                                    }
+                                   
 
                                 <div className="about">
                                     <div className="box">
                                         <div className="year_company">
-                                            <h5>2021.09-2021.10 </h5>
+                                            <h5>2021.09-2021.10</h5>
                                             <h5>Sample Company</h5>
                                         </div>
                                         <div className="text">
@@ -262,22 +306,29 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
                                             <p>Sample Job description.</p>
                                         </div>
                                     </div>
-                                
                                 </div>
-
+                                {
+                                    skillsTitle?.map(title => <CVSkillsTitle 
+                                        key={title.id}
+                                        cvId={id}
+                                        skillsTitle={skillsTitle}
+                                        getSkillsTitle={getSkillsTitle}
+                                    />)
+                                }
                                 <div className="about skills">
-                                    <h2 className="title2">SKILLS</h2>
-                                    <br/>
                                         <div style={{display:"flex", marginTop:"1rem", gap:"3px"}}>
-                                            <h4 style={{color:"#848c90"}}>Java, </h4>
-                                            <h4 style={{color:"#848c90"}}>C#, </h4>
-                                            <h4 style={{color:"#848c90"}}>PHP,</h4>
-                                            <h4 style={{color:"#848c90"}}>HTML,</h4>
-                                            
+                                            <h4 style={{color:"#848c90"}}>Java, C#, Node.js, JavaScript </h4>                                           
                                         </div>
-                                    </div>    
+                                </div>  
+                                {
+                                    hobbiesTitle?.map(title => <CVHobbiesTitle 
+                                        key={title.id}
+                                        cvId={id}
+                                        hobbiesTitle={hobbiesTitle}
+                                        getHobbiesTitle={getHobbiesTitle}
+                                    />)
+                                }
                                 <div className="about interests">
-                                    <h2 className="title2">Interests</h2>
                                     <ul>
                                             <li>Fitness</li>
                                             <li>Movies</li>

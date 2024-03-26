@@ -78,17 +78,17 @@ CREATE TABLE cv_about_me(
   about_text TEXT
 )
 
-CREATE TABLE work_experience_title(
+CREATE TABLE cv_work_experience_title(
   id INTEGER REFERENCES cvs(id) ON DELETE CASCADE,
   title VARCHAR(255)
 )
 
-CREATE TABLE skills_title(
+CREATE TABLE cv_skills_title(
   id INTEGER REFERENCES cvs(id) ON DELETE CASCADE,
   title VARCHAR(255)
 )
 
-CREATE TABLE hobbies_title(
+CREATE TABLE cv_hobbies_title(
   id INTEGER REFERENCES cvs(id) ON DELETE CASCADE,
   title VARCHAR(255)
 )
