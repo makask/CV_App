@@ -107,4 +107,10 @@ CREATE TABLE cv_hobbies_title(
   title VARCHAR(255)
 )
 
+CREATE TABLE cv_hobbies(
+  id SERIAL PRIMARY KEY,
+  hobbie VARCHAR(255),
+  cv_id INTEGER REFERENCES cvs(id) ON DELETE CASCADE
+)
+
 

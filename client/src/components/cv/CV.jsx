@@ -11,16 +11,16 @@ import CVAboutMeTitle from "./CVAboutMeTitle";
 import CVAboutMe from "./CVAboutMe";
 import CVWorkExperienceTitle from "./CVWorkExperienceTitle";
 import CVSkillsTitle from "./CVSkillsTitle";
-import CVHobbiesTitle from "./CVHobbiesTitle";
 import CVWorkExpItem from "./CVWorkExpItem";
 import CVSkills from "./CVSkills";
-import CVSkillsForm from "./forms/CVSkillsForm";
+import CVHobbiesTitle from "./CVHobbiesTitle";
+import CVHobbiesItem from "./CVHobbiesItem";
 import './CV.css';
 
 import { useReactToPrint } from 'react-to-print';
 
 
-function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id }){
+function CV({ setIsCv,  setCVid, id }){
 
     const[cvProfileData, setCvProfileData] = useState(null);
     const[contactData, setContactData] = useState(null);
@@ -37,6 +37,7 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
     const[skills, setSkills] = useState(null);
     const[hobbiesTitle, setHobbiesTitle] = useState(null);
     const[workItems, setWorkItems] = useState(null);
+    const[hobbies, setHobbies] = useState(null);
 
     async function getCVProfileData(id){
         try{
@@ -188,6 +189,16 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
         }
     }
 
+    async function getHobbies(id){
+        try{
+            const response = await fetch(`${process.env.REACT_APP_SERVERURL}/cv/hobbies/${id}`);
+            const json = await response.json();
+            setHobbies(json);
+        }catch(err){
+            console.error(err);
+        }
+    }
+
     useEffect(()=>{
         getCVProfileData(id);
         getContactsData(id);
@@ -204,6 +215,7 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
         getSkills(id);
         getHobbiesTitle(id);
         getWorkItems(id);
+        getHobbies(id);
     },[]);
     
     function handleClick(){
@@ -355,17 +367,21 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
                                         cvId={id}
                                         hobbiesTitle={hobbiesTitle}
                                         getHobbiesTitle={getHobbiesTitle}
+                                        getHobbies={getHobbies}
                                     />)
                                 }
-                                <div className="about interests">
-                                    <ul>
-                                            <li>Fitness</li>
-                                            <li>Movies</li>
-                                            <li>Music</li>
-                                            <li>Programming</li>
-                                    </ul>
-                                </div>                               
+                                <div className="hobbies-container">
+                                    {
+                                        hobbies?.map(hobbie => <CVHobbiesItem 
+                                            key={hobbie.id}
+                                            id={hobbie.id}
+                                            cvId={id}
+                                            hobbie={hobbie.hobbie}
+                                            getHobbies={getHobbies}
+                                        />)
+                                    }              
                                 </div>
+                            </div>
                     </div>
                 </div>
                 <button className="btn-cv-print" onClick={handlePrint}>Download as PDF</button>

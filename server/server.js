@@ -630,6 +630,53 @@ app.put('/cv/hobbiestitle/:id', async(req, res) =>{
     }
 });
 
+// Get all hobbie items
+app.get('/cv/hobbies/:cvId', async(req, res) => {
+    const{cvId} = req.params;
+    try{
+        const response = await db.query("SELECT * FROM cv_hobbies WHERE cv_id = $1 ORDER BY id ASC", [cvId]);
+        res.json(response.rows);
+    }catch(err){
+        console.error(err);
+    }
+});
+
+// Add new hobbie item
+app.post('/cv/hobbies/:cvId', async(req, res) => {
+    const{cvId} = req.params;
+    try{
+        const response = await db.query("INSERT INTO cv_hobbies(hobbie, cv_id) VALUES ($1, $2)",
+        ["Sample hobbie", cvId]);
+        res.json(response);
+    }catch(err){
+        console.error(err);
+    }
+});
+
+// Edit hobbie item
+app.put('/cv/hobbies/:id', async(req, res) => {
+    const{id} = req.params;
+    const{hobbie} = req.body;
+    try{
+        const editHobbieItem = await db.query('UPDATE cv_hobbies SET hobbie = $1 WHERE id = $2', 
+        [hobbie, id]);
+        res.json(editHobbieItem);
+    }catch(err){
+        console.error(err);
+    }
+});
+
+// Delete hobbie item
+app.delete('/cv/hobbies/:id', async(req, res) => {
+    const{id} = req.params;
+    try{
+        const deleteHobbieItem = await db.query('DELETE FROM cv_hobbies WHERE id = $1', [id]);
+        res.json(deleteHobbieItem);
+    }catch(err){
+        console.error(err);
+    }
+});
+
 let lastInsertedCvId = null;
 // add new cv
 app.post('/cvs', async(req, res) => {

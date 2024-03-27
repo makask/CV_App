@@ -1,0 +1,22 @@
+#hobbies-submit-icon{
+    margin-left: 20px;
+}
+
+#hobbies-submit-icon:hover{
+    opacity: 70%;
+}
+
+#hobbies-cancel-icon{
+    margin-left: 20px;
+}
+
+#hobbies-cancel-icon:hover{
+    opacity: 70%;
+}
+
+.hobbies-upper-div input{
+    text-align: center;
+    font-size: 16px;
+    height: 24px;
+    width: 80%;
+}
