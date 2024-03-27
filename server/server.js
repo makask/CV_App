@@ -561,6 +561,41 @@ app.put('/cv/skillstitle/:id', async(req, res) =>{
     }
 });
 
+// Add default cv skills
+app.post('/cv/skills/:id', async(req, res) => {
+    const{id} = req.params;
+    try{    
+        const defSkills = await db.query("INSERT INTO cv_skills(id, skills) VALUES ($1, $2)", [id, "Write your skills here..."]);
+        res.json(defSkills);
+    }catch(err){
+        console.error(err);
+    }
+})
+
+// Get cv skills
+app.get('/cv/skills/:id', async(req, res) => {
+    const{id} = req.params;
+    try{
+        const response = await db.query("SELECT * FROM cv_skills WHERE id = $1", [id]);
+        res.json(response.rows);
+    }catch(err){
+        console.error(err);
+    }
+});
+
+// Edit cv skills
+app.put('/cv/skills/:id', async(req, res) =>{
+    const{id} = req.params;
+    const{skills} = req.body;
+    try{
+        const response = await db.query("UPDATE cv_skills SET skills = $1 WHERE id = $2", [skills, id]);
+        res.json(response);
+    }catch(err){
+        console.error(err);
+    }
+});
+
+
 // Add default cv hobbies title
 app.post('/cv/hobbiestitle/:id', async(req, res) => {
     const{id} = req.params;

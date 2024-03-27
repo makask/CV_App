@@ -13,6 +13,8 @@ import CVWorkExperienceTitle from "./CVWorkExperienceTitle";
 import CVSkillsTitle from "./CVSkillsTitle";
 import CVHobbiesTitle from "./CVHobbiesTitle";
 import CVWorkExpItem from "./CVWorkExpItem";
+import CVSkills from "./CVSkills";
+import CVSkillsForm from "./forms/CVSkillsForm";
 import './CV.css';
 
 import { useReactToPrint } from 'react-to-print';
@@ -32,6 +34,7 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
     const[aboutMe, setAboutMe] = useState(null);
     const[workExperienceTitle, setWorkExperienceTitle] = useState(null);
     const[skillsTitle, setSkillsTitle] = useState(null);
+    const[skills, setSkills] = useState(null);
     const[hobbiesTitle, setHobbiesTitle] = useState(null);
     const[workItems, setWorkItems] = useState(null);
 
@@ -145,6 +148,16 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
         }
     }
 
+    async function getWorkItems(id){
+        try{
+            const response = await fetch(`${process.env.REACT_APP_SERVERURL}/cv/workexperience/${id}`);
+            const json = await response.json();
+            setWorkItems(json);
+        }catch(err){
+            console.error(err);
+        }
+    }
+
     async function getSkillsTitle(id){
         try{
             const response = await fetch(`${process.env.REACT_APP_SERVERURL}/cv/skillstitle/${id}`);
@@ -155,21 +168,21 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
         }
     }
 
-    async function getHobbiesTitle(id){
+    async function getSkills(id){
         try{
-            const response = await fetch(`${process.env.REACT_APP_SERVERURL}/cv/hobbiestitle/${id}`);
+            const response = await fetch(`${process.env.REACT_APP_SERVERURL}/cv/skills/${id}`);
             const json = await response.json();
-            setHobbiesTitle(json);
+            setSkills(json);
         }catch(err){
             console.error(err);
         }
     }
 
-    async function getWorkItems(id){
+    async function getHobbiesTitle(id){
         try{
-            const response = await fetch(`${process.env.REACT_APP_SERVERURL}/cv/workexperience/${id}`);
+            const response = await fetch(`${process.env.REACT_APP_SERVERURL}/cv/hobbiestitle/${id}`);
             const json = await response.json();
-            setWorkItems(json);
+            setHobbiesTitle(json);
         }catch(err){
             console.error(err);
         }
@@ -188,6 +201,7 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
         getAboutMe(id);
         getWorkExperienceTitle(id);
         getSkillsTitle(id);
+        getSkills(id);
         getHobbiesTitle(id);
         getWorkItems(id);
     },[]);
@@ -327,11 +341,14 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
                                         getSkillsTitle={getSkillsTitle}
                                     />)
                                 }
-                                <div className="about skills">
-                                        <div style={{display:"flex", marginTop:"1rem", gap:"3px"}}>
-                                            <h4 style={{color:"#848c90"}}>Java, C#, Node.js, JavaScript </h4>                                           
-                                        </div>
-                                </div>  
+                                {
+                                    skills?.map(item => <CVSkills 
+                                        key={item.id}
+                                        cvId={id}
+                                        skills={skills}
+                                        getSkills={getSkills}
+                                    />)
+                                }
                                 {
                                     hobbiesTitle?.map(title => <CVHobbiesTitle 
                                         key={title.id}

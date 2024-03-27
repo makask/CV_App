@@ -82,6 +82,11 @@ function AddCv({ toggleForm, getUserCVs }){
                 method: "POST",
                 headers: {'Content-Type': 'application/json'} 
             });
+            //Add default cv skills
+            const defSkills = await fetch(`${process.env.REACT_APP_SERVERURL}/cv/skills/${id}`, {
+                method: "POST",
+                headers: {'Content-Type': 'application/json'} 
+            });
             //Add default cv hobbies title
             const defHobbiesTitle = await fetch(`${process.env.REACT_APP_SERVERURL}/cv/hobbiestitle/${id}`, {
                 method: "POST",

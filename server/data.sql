@@ -97,6 +97,11 @@ CREATE TABLE cv_skills_title(
   title VARCHAR(255)
 )
 
+CREATE TABLE cv_skills(
+  id INTEGER REFERENCES cvs(id) ON DELETE CASCADE,
+  skills TEXT
+)
+
 CREATE TABLE cv_hobbies_title(
   id INTEGER REFERENCES cvs(id) ON DELETE CASCADE,
   title VARCHAR(255)
