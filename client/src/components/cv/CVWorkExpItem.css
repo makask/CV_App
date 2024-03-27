@@ -1,0 +1,53 @@
+.work-item-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.work-item-top,.work-item-bottom{
+    display: flex;
+    margin-top:-14px;
+    margin-bottom: -14px;
+}
+
+.work-item-date, .work-item-company{
+    display: flex;
+    flex-wrap: wrap;
+    width: 15%;
+    align-items: center;
+}
+
+.work-item-date h5, .work-item-company h5{
+    color: #676d70;
+    font-weight: 700;
+}
+
+.work-item-profession h5{
+    color: #2a7da2;
+    font-size: 16px;
+}
+
+.work-item-profession, .work-item-job-description{
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.work-item-job-description h5{
+    font-size: 16px;
+    color: #333;
+    font-weight: 400;
+}
+.work-item-delete, .work-item-edit{
+    display: flex;
+    align-items: center;
+    width: 5%;
+}
+
+.work-item-delete i {
+    margin-left: 0.7rem;
+}
+
+.work-item-delete i:hover {
+    opacity: 80%;
+}
+

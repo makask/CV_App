@@ -480,6 +480,53 @@ app.put('/cv/workexperiencetitle/:id', async(req, res) =>{
     }
 });
 
+// Get all work experience items
+app.get('/cv/workexperience/:cvId', async(req, res) => {
+    const{cvId} = req.params;
+    try{
+        const response = await db.query("SELECT * FROM cv_work_experience WHERE cv_id = $1 ORDER BY id DESC", [cvId]);
+        res.json(response.rows);
+    }catch(err){
+        console.error(err);
+    }
+})
+
+// Add new work experience item
+app.post('/cv/workexperience/:cvId', async(req, res) => {
+    const{cvId} = req.params;
+    try{
+        const response = await db.query("INSERT INTO cv_work_experience(working_period, profession, company, job_description, cv_id) VALUES ($1, $2, $3, $4, $5)",
+        ["Working period", "Profession", "Company", "Job description", cvId]);
+        res.json(response);
+    }catch(err){
+        console.error(err);
+    }
+});
+
+// Edit work experience item
+app.put('/cv/workexperience/:id', async(req, res) => {
+    const{id} = req.params;
+    const{working_period, profession, company, job_description} = req.body;
+    try{
+        const editWorkExpItem = await db.query('UPDATE cv_work_experience SET working_period = $1, profession = $2, company = $3, job_description = $4 WHERE id = $5', 
+        [working_period, profession, company, job_description, id]);
+        res.json(editWorkExpItem);
+    }catch(err){
+        console.error(err);
+    }
+});
+
+// Delete work experience item
+app.delete('/cv/workexperience/:id', async(req, res) => {
+    const{id} = req.params;
+    try{
+        const deleteWorkItem = await db.query('DELETE FROM cv_work_experience WHERE id = $1', [id]);
+        res.json(deleteWorkItem);
+    }catch(err){
+        console.error(err);
+    }
+});
+
 // Add default cv skills title
 app.post('/cv/skillstitle/:id', async(req, res) => {
     const{id} = req.params;

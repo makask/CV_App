@@ -83,6 +83,15 @@ CREATE TABLE cv_work_experience_title(
   title VARCHAR(255)
 )
 
+CREATE TABLE cv_work_experience(
+  id SERIAL PRIMARY KEY,
+  working_period VARCHAR(255),
+  profession VARCHAR(255),
+  company VARCHAR(255),
+  job_description TEXT,
+  cv_id INTEGER REFERENCES cvs(id) ON DELETE CASCADE
+)
+
 CREATE TABLE cv_skills_title(
   id INTEGER REFERENCES cvs(id) ON DELETE CASCADE,
   title VARCHAR(255)

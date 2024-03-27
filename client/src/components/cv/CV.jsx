@@ -12,8 +12,8 @@ import CVAboutMe from "./CVAboutMe";
 import CVWorkExperienceTitle from "./CVWorkExperienceTitle";
 import CVSkillsTitle from "./CVSkillsTitle";
 import CVHobbiesTitle from "./CVHobbiesTitle";
+import CVWorkExpItem from "./CVWorkExpItem";
 import './CV.css';
-
 
 import { useReactToPrint } from 'react-to-print';
 
@@ -33,6 +33,7 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
     const[workExperienceTitle, setWorkExperienceTitle] = useState(null);
     const[skillsTitle, setSkillsTitle] = useState(null);
     const[hobbiesTitle, setHobbiesTitle] = useState(null);
+    const[workItems, setWorkItems] = useState(null);
 
     async function getCVProfileData(id){
         try{
@@ -164,6 +165,16 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
         }
     }
 
+    async function getWorkItems(id){
+        try{
+            const response = await fetch(`${process.env.REACT_APP_SERVERURL}/cv/workexperience/${id}`);
+            const json = await response.json();
+            setWorkItems(json);
+        }catch(err){
+            console.error(err);
+        }
+    }
+
     useEffect(()=>{
         getCVProfileData(id);
         getContactsData(id);
@@ -178,6 +189,7 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
         getWorkExperienceTitle(id);
         getSkillsTitle(id);
         getHobbiesTitle(id);
+        getWorkItems(id);
     },[]);
     
     function handleClick(){
@@ -269,44 +281,44 @@ function CV({ profileData, getProfileData, setProfileData, setIsCv,  setCVid, id
                                 }
                             </div>
                             <div className="right-panel">
-                                    {
-                                        aboutMeTitle?.map(title => <CVAboutMeTitle 
-                                            key={title.id}
-                                            cvId={id}
-                                            aboutMeTitle={aboutMeTitle}
-                                            getAboutMeTitle={getAboutMeTitle}
-                                        />)
-                                    }
-                                    {
-                                        aboutMe?.map(about => <CVAboutMe 
-                                            key={about.id}
-                                            cvId={id}
-                                            aboutMe={aboutMe}
-                                            getAboutMe={getAboutMe}
-                                       />)
-                                    }
-                                    {
-                                        workExperienceTitle?.map(title => <CVWorkExperienceTitle 
-                                            key={title.id}
-                                            cvId={id}
-                                            workExperienceTitle={workExperienceTitle}
-                                            getWorkExperienceTitle={getWorkExperienceTitle}
-                                        />)
-                                    }
-                                   
-
-                                <div className="about">
-                                    <div className="box">
-                                        <div className="year_company">
-                                            <h5>2021.09-2021.10</h5>
-                                            <h5>Sample Company</h5>
-                                        </div>
-                                        <div className="text">
-                                            <h4>SOFTWARE DEVELOPMENT INTERN</h4>
-                                            <p>Sample Job description.</p>
-                                        </div>
-                                    </div>
-                                </div>
+                                {
+                                    aboutMeTitle?.map(title => <CVAboutMeTitle 
+                                        key={title.id}
+                                        cvId={id}
+                                        aboutMeTitle={aboutMeTitle}
+                                        getAboutMeTitle={getAboutMeTitle}
+                                    />)
+                                }
+                                {
+                                    aboutMe?.map(about => <CVAboutMe 
+                                        key={about.id}
+                                        cvId={id}
+                                        aboutMe={aboutMe}
+                                        getAboutMe={getAboutMe}
+                                    />)
+                                }
+                                {
+                                    workExperienceTitle?.map(title => <CVWorkExperienceTitle 
+                                        key={title.id}
+                                        cvId={id}
+                                        workExperienceTitle={workExperienceTitle}
+                                        getWorkExperienceTitle={getWorkExperienceTitle}
+                                        getWorkItems={getWorkItems}
+                                    />)
+                                }
+                                {
+                                    workItems?.map(item => <CVWorkExpItem 
+                                        key={item.id}
+                                        id={item.id}
+                                        cvId={id}
+                                        workItems={workItems}
+                                        getWorkItems={getWorkItems}
+                                        working_period = {item.working_period}
+                                        profession = {item.profession}
+                                        company = {item.company}
+                                        job_description = {item.job_description}
+                                    />)
+                                }  
                                 {
                                     skillsTitle?.map(title => <CVSkillsTitle 
                                         key={title.id}

@@ -1,0 +1,28 @@
+.work-item-delete h4, .work-item-edit i{
+    margin-left: 0.7rem;
+}
+
+.work-item-delete h4:hover{
+    opacity: 80%;
+}
+
+.work-item-edit i:hover{
+    opacity: 80%;
+}
+
+.work-item-date input, .work-item-company input{
+    height: 20px;
+    width: 90%;
+    font-size: 13px;
+}
+
+.work-item-profession input, .work-item-job-description input {
+    height: 20px;
+    width: 520%;
+    font-size: 13px;
+}
+
+
+
+
+
