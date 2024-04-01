@@ -1,0 +1,29 @@
+.cv-item-upper-div{
+    height: 19%;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.cv-item-upper-div input{
+    height: 30px;
+    width: 160px;
+    text-align: center;
+    margin-left: 6px;
+}
+
+.cv-item-upper-div i:hover, .cv-item-upper-div p:hover{
+    cursor: pointer;
+    opacity: 70%;
+}
+
+.cv-item-middle-div{
+    height: 52%;
+}
+
+.cv-item-buttons-div {
+    height: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}

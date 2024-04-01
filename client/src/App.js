@@ -13,7 +13,7 @@ function App() {
   
   const authToken = cookies.AuthToken;
   const userEmail = cookies.Email;
-
+  
   async function getProfileData(userEmail){
     try{
         const response = await fetch(`${process.env.REACT_APP_SERVERURL}/profile/${userEmail}`);

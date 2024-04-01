@@ -6,7 +6,7 @@ function AddCv({ toggleForm, getUserCVs }){
     const [cookies, setCookie, removeCookie] = useCookies(null);
     const [title, setTitle] = useState("");
     const userEmail = cookies.Email;
-
+    
     function handleChange(event){
        setTitle(event.target.value);
     }
@@ -92,7 +92,7 @@ function AddCv({ toggleForm, getUserCVs }){
                 method: "POST",
                 headers: {'Content-Type': 'application/json'} 
             });
-            getUserCVs();
+            getUserCVs(userEmail);
         }catch(err){
             console.error(err);
         }

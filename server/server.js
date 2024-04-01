@@ -20,7 +20,7 @@ app.use(express.urlencoded({limit: '50mb'}));
 app.get('/cvs/:userEmail', async(req, res) => {
     const { userEmail } = req.params;
     try{
-        const cvs = await db.query("SELECT * FROM cvs WHERE user_email = $1", [userEmail]);
+        const cvs = await db.query("SELECT * FROM cvs WHERE user_email = $1 ORDER BY id ASC", [userEmail]);
         res.json(cvs.rows);
     }catch(err){    
         console.error(err);
@@ -685,6 +685,18 @@ app.post('/cvs', async(req, res) => {
         const newCV = await db.query("INSERT INTO cvs(cv_title, user_email) VALUES($1, $2) RETURNING id", [cv_title, user_email]);
         lastInsertedCvId = newCV.rows[0].id;
         res.json(newCV);
+    }catch(err){
+        console.error(err);
+    }
+});
+
+// edit cv item title
+app.put('/cvs/:cvId', async(req, res) => {
+    const { cvId } = req.params;
+    const {cvTitle} = req.body;
+    try{
+        const editCVTitle = await db.query('UPDATE cvs SET cv_title = $1 WHERE id = $2', [cvTitle, cvId]);
+        res.json(editCVTitle);
     }catch(err){
         console.error(err);
     }

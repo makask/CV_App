@@ -3,11 +3,12 @@ import Header from "./Header";
 import LeftPanel from "./LeftPanel";
 import WorkArea from "./WorkArea";
 
-function Main({ userEmail, authToken,cvId, setIsCV, setCVid, profileData, getProfileData, setProfileData }){
+function Main({ userEmail, authToken, setIsCV, setCVid, profileData, getProfileData, setProfileData }){
    
     const[section, setSection] = useState("Home");
     const[cvs, setCvs] = useState([]);
-    async function getUserCVs(){
+    
+    async function getUserCVs(userEmail){
         try{
             const response = await fetch(`${process.env.REACT_APP_SERVERURL}/cvs/${userEmail}`);
             const json = await response.json();
@@ -19,7 +20,7 @@ function Main({ userEmail, authToken,cvId, setIsCV, setCVid, profileData, getPro
 
     useEffect(()=>{
         if(authToken){
-           getUserCVs();
+           getUserCVs(userEmail);
            getProfileData(userEmail);
         }
     }, []);
@@ -29,16 +30,20 @@ function Main({ userEmail, authToken,cvId, setIsCV, setCVid, profileData, getPro
                 <LeftPanel setSection={setSection} section={section} getUserCVs={getUserCVs} />
                 <div className="workarea">
                     { 
-                        profileData?.map(item => <Header key={"0"} profileData={profileData} />)
+                        profileData?.map(item => <Header 
+                        key={"0"} 
+                        profileData={profileData} />)
                     }                 
                     <WorkArea 
                         section={section} 
-                        cvs={cvs} setIsCV={setIsCV} 
+                        cvs={cvs} 
+                        setIsCV={setIsCV} 
                         setCVid={setCVid} 
                         profileData={profileData} 
                         setProfileData={setProfileData}
                         getProfileData={getProfileData}
                         getUserCVs={getUserCVs}
+                        userEmail={userEmail}
                     />             
                 </div>
         </div>
