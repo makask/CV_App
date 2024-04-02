@@ -148,7 +148,7 @@ input::placeholder {
     cursor: pointer;
 }
 
-.lp-cvs{
+.lp-cvs, .lp-advertisements, .lp-assignments{
     display: flex;
     align-items: center;
 }
@@ -164,7 +164,29 @@ input::placeholder {
     margin-left: 11rem;
 }
 
-.lp-add-cv-btn:hover {
+.lp-add-adv-btn{
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 50%;
+    color: var(--main-background);
+    background-color: #003147;
+    border: 2px solid var(--main-background);
+    font-size: 2rem;
+    margin-left: 4rem;
+}
+
+.lp-add-assignment-btn{
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 50%;
+    color: var(--main-background);
+    background-color: #003147;
+    border: 2px solid var(--main-background);
+    font-size: 2rem;
+    margin-left: 4rem;
+}
+
+.lp-add-cv-btn:hover, .lp-add-adv-btn:hover, .lp-add-assignment-btn:hover {
     opacity: 0.8;
     cursor: pointer;
 }

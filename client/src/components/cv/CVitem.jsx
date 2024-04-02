@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import "./CVitem.css";
 import CVitemTitleForm from "./forms/CVitemTitleForm";
-import { useCookies } from "react-cookie"; //
+import { useCookies } from "react-cookie"; 
 
 function CVitem({id, cv_title, setIsCV, setCVid, getUserCVs }){
 
    const[titleClicked, setTitleClicked] = useState(false);
    const [cookies] = useCookies(null);
-   const userEmail = cookies.Email; //
+   const userEmail = cookies.Email; 
     
    function toggleForm(){
       setTitleClicked(!titleClicked);

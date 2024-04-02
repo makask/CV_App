@@ -732,6 +732,51 @@ app.post('/profile/:userEmail', async(req, res) => {
     }
 });
 
+// get all advertisements
+app.get('/advertisements/:userEmail', async(req, res) => {
+    const{userEmail} = req.params;
+    try{
+        const advertisements = await db.query("SELECT * FROM advertisements WHERE user_email = $1 ORDER BY id ASC", [userEmail]);
+        res.json(advertisements.rows);
+    }catch(err){
+        console.error(err);
+    }
+});
+
+// add new advertisement
+app.post('/advertisements', async(req, res) => {
+    const { link, user_email } = req.body;
+    try {
+        const newAdvertisements = await db.query("INSERT INTO advertisements(link, user_email) VALUES($1, $2)", [link, user_email]);
+        res.json(newAdvertisements);
+    }catch(err){
+        console.error(err);
+    }
+});
+
+// update advertisement
+app.put('/advertisements/:id', async(req, res) => {
+    const { id } = req.params;
+    const {link} = req.body;
+    try{
+        const editAdvertisement = await db.query('UPDATE advertisements SET link = $1 WHERE id = $2', [link, id]);
+        res.json(editAdvertisement);
+    }catch(err){
+        console.error(err);
+    }
+});
+
+// delete advertisement
+app.delete('/advertisements/:id', async(req, res) => {
+    const {id} = req.params;
+    try{
+        const deleteAdvertisement = await db.query("DELETE FROM advertisements WHERE id = $1", [id]);
+        res.json(deleteAdvertisement);
+    }catch(err){
+        console.error(err);
+    }
+})
+
 
 // Sign up
 app.post('/signup', async(req, res) => {

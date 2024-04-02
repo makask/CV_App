@@ -1,0 +1,14 @@
+.adv-item-link input{
+    width: 99%;
+    height: 1.7rem;
+    border-radius: 5px;
+}
+
+.adv-item-buttons h3:hover{
+    opacity: 70%;
+    cursor: pointer;
+}
+
+.adv-item-form-update-icon{
+    margin-left: 2.6rem;
+}

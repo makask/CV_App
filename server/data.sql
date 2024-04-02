@@ -113,4 +113,10 @@ CREATE TABLE cv_hobbies(
   cv_id INTEGER REFERENCES cvs(id) ON DELETE CASCADE
 )
 
+CREATE TABLE advertisements(
+  id SERIAL PRIMARY KEY,
+  link TEXT,
+  user_email VARCHAR REFERENCES users(email)
+)
+
 
