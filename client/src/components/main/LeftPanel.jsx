@@ -3,7 +3,7 @@ import AddCv from "../cv/AddCv";
 import { useCookies } from "react-cookie";
 
 
-function LeftPanel({ setSection, section, getUserCVs, getUserAdvertisements }){
+function LeftPanel({ setSection, section, getUserCVs, getUserAdvertisements, getUserTasks }){
 
     const [cookies] = useCookies(null);
     const userEmail = cookies.Email; 
@@ -30,6 +30,22 @@ function LeftPanel({ setSection, section, getUserCVs, getUserAdvertisements }){
         }
     }
 
+    async function addNewTask(){
+        try{
+            const response = await fetch(`${process.env.REACT_APP_SERVERURL}/tasks`, {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    task: "Task description",
+                    user_email: userEmail
+                }) 
+            });
+            getUserTasks(userEmail);
+        }catch(err){
+            console.error(err);
+        }
+    }
+
     return(
         <div className="left-panel-container">
             <div className="left-panel-menu">
@@ -48,7 +64,7 @@ function LeftPanel({ setSection, section, getUserCVs, getUserAdvertisements }){
                         setSection('Assignments');
                     }}><i className="fa fa-tasks" aria-hidden="true"></i> Assignments
                     </h2>
-                    { (section==="Assignments" && !toggleForm) && <button className="lp-add-assignment-btn">+</button> }
+                    { (section==="Assignments" && !toggleForm) && <button onClick={addNewTask} className="lp-add-assignment-btn">+</button> }
                 </div>
                 <div className="lp-advertisements">
                     <h2 onClick={()=>{

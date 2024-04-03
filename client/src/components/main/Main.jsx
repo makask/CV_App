@@ -8,6 +8,7 @@ function Main({ userEmail, authToken, setIsCV, setCVid, profileData, getProfileD
     const[section, setSection] = useState("Home");
     const[cvs, setCvs] = useState([]);
     const[advertisements, setAdvertisements] = useState([]);
+    const[tasks, setTasks] = useState([]);
     
     async function getUserCVs(userEmail){
         try{
@@ -29,11 +30,22 @@ function Main({ userEmail, authToken, setIsCV, setCVid, profileData, getProfileD
         }
     }
 
+    async function getUserTasks(userEmail){
+        try{
+            const response = await fetch(`${process.env.REACT_APP_SERVERURL}/tasks/${userEmail}`);
+            const json = await response.json();
+            setTasks(json);
+        }catch(err){
+            console.error(err);
+        }
+    }
+
     useEffect(()=>{
         if(authToken){
            getUserCVs(userEmail);
            getProfileData(userEmail);
            getUserAdvertisements(userEmail);
+           getUserTasks(userEmail);
         }
     }, []);
     
@@ -44,6 +56,7 @@ function Main({ userEmail, authToken, setIsCV, setCVid, profileData, getProfileD
                     section={section} 
                     getUserCVs={getUserCVs} 
                     getUserAdvertisements={getUserAdvertisements}
+                    getUserTasks={getUserTasks}
                 />
                 <div className="workarea">
                     { 
@@ -63,6 +76,8 @@ function Main({ userEmail, authToken, setIsCV, setCVid, profileData, getProfileD
                         userEmail={userEmail}
                         advertisements={advertisements}
                         getUserAdvertisements={getUserAdvertisements}
+                        tasks={tasks}
+                        getUserTasks={getUserTasks}
                     />             
                 </div>
         </div>

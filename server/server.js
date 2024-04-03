@@ -777,6 +777,50 @@ app.delete('/advertisements/:id', async(req, res) => {
     }
 })
 
+// get all tasks
+app.get('/tasks/:userEmail', async(req, res) => {
+    const{userEmail} = req.params;
+    try{
+        const tasks = await db.query("SELECT * FROM tasks WHERE user_email = $1 ORDER BY id ASC", [userEmail]);
+        res.json(tasks.rows);
+    }catch(err){
+        console.error(err);
+    }
+});
+
+// add new task
+app.post('/tasks', async(req, res) => {
+    const { task, user_email } = req.body;
+    try {
+        const newTask = await db.query("INSERT INTO tasks(task, user_email) VALUES($1, $2)", [task, user_email]);
+        res.json(newTask);
+    }catch(err){
+        console.error(err);
+    }
+});
+
+// update task
+app.put('/tasks/:id', async(req, res) => {
+    const { id } = req.params;
+    const {task} = req.body;
+    try{
+        const editTask = await db.query('UPDATE tasks SET task = $1 WHERE id = $2', [task, id]);
+        res.json(editTask);
+    }catch(err){
+        console.error(err);
+    }
+});
+
+// delete task
+app.delete('/tasks/:id', async(req, res) => {
+    const {id} = req.params;
+    try{
+        const deleteTask = await db.query("DELETE FROM tasks WHERE id = $1", [id]);
+        res.json(deleteTask);
+    }catch(err){
+        console.error(err);
+    }
+})
 
 // Sign up
 app.post('/signup', async(req, res) => {

@@ -1,4 +1,3 @@
-/* CREATE TABLES */
 CREATE TABLE users (
     email VARCHAR(255) PRIMARY KEY,
     hashed_password VARCHAR(255)
@@ -116,6 +115,12 @@ CREATE TABLE cv_hobbies(
 CREATE TABLE advertisements(
   id SERIAL PRIMARY KEY,
   link TEXT,
+  user_email VARCHAR REFERENCES users(email)
+)
+
+CREATE TABLE tasks(
+  id SERIAL PRIMARY KEY,
+  task TEXT,
   user_email VARCHAR REFERENCES users(email)
 )
 
