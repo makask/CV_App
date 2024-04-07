@@ -231,7 +231,7 @@ function CV({ setIsCv,  setCVid, id }){
     
     return (       
             <div className="cv">
-                <button className="btn-cv-return" onClick={handleClick}>Go Back {id}</button>
+                <button className="btn-cv-return" onClick={handleClick}>Back</button>
                     <div className="cv-print-area" ref={componentRef}>
                         <div className="cv-container">
                             <div className="left-panel">

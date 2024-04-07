@@ -1,13 +1,19 @@
-.btn-cv-return{
-    margin-left: 4rem;
+.btn-cv-return, .btn-cv-print{
     padding: 10px;
     margin: 10px;
-    margin-left: 4rem;
+    margin-left: 4.3rem;
+    width: 12rem;
+    border-radius: 5px;
+    border:none;
+    color: #fff;
+    background-color: #003147;
+    font-size: 16px;
+    font-weight: 700;
 }
 
-.btn-cv-print{
-    margin-left: 4rem;
-    padding: 10px;
-    margin: 10px;
-    margin-left: 4rem; 
+.btn-cv-return:hover, .btn-cv-print:hover{
+    opacity: 70%;
+    cursor: pointer;
+    border: 1px solid #fff;
 }
+
